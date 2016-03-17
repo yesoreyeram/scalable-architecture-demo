@@ -1,3 +1,4 @@
+<<<<<<< cede533219cbb1f25b8d44259023fe7dbb6d3c56
 # Introduction
 
 [![Angular 2 Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://github.com/mgechev/angular2-style-guide)
@@ -25,6 +26,8 @@ It is something similar to the Angular Quick Start but does the entire build wit
 - Has autoprefixer and css-lint support.
 - Basic Service Worker, which implements "Cache then network strategy".
 
+=======
+>>>>>>> chore: initial commit
 # How to start
 
 **Note** that this seed project requires node v4.x.x or higher and npm 2.14.7.
@@ -53,6 +56,7 @@ npm run build.dev
 # prod build
 npm run build.prod
 ```
+<<<<<<< cede533219cbb1f25b8d44259023fe7dbb6d3c56
 
 _Does not rely on any global dependencies._
 
@@ -261,3 +265,5 @@ You can follow the [Angular 2 change log here](https://github.com/angular/angula
 # License
 
 MIT
+=======
+>>>>>>> chore: initial commit
