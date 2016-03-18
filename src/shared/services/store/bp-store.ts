@@ -139,5 +139,3 @@ const initialState: Parent = {
   name: null,
   timezone: null
 };
-
-const store = fromJS(initialState);
