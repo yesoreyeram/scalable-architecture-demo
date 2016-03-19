@@ -2,7 +2,7 @@
 
 import {fromJS} from 'immutable';
 
-export interface Badge {
+export class Badge {
   id: number;
   name: string;
   description: string;
@@ -11,7 +11,7 @@ export interface Badge {
   rank: number;
 }
 
-export interface Topic {
+export class Topic {
   id: number;
   subject: number;
   grade: string;
@@ -19,7 +19,7 @@ export interface Topic {
   name: string;
 }
 
-export interface Standard {
+export class Standard {
   id: number;
   topic: Topic;
   code: string;
@@ -27,7 +27,7 @@ export interface Standard {
   description: string;
 }
 
-export interface Question {
+export class Question {
   id: number;
   standard: Standard;
   text: string;
@@ -42,19 +42,19 @@ export interface Question {
   minutes_taken: number;
 }
 
-export interface TopicData {
+export class TopicData {
   id: number;
   topic: Topic;
   difficulty: number;
 }
 
-export interface Customization {
+export class Customization {
   id: number;
   avatar: number;
   title: number;
 }
 
-export interface Performances {
+export class Performances {
   id: number;
   questions_count: number;
   standard: Standard;
@@ -66,7 +66,7 @@ export interface Performances {
   daily_scores: any;
 }
 
-export interface Kid {
+export class Kid {
   id: number;
   customization: Customization;
   performances: Performances[];
@@ -86,7 +86,7 @@ export interface Kid {
   platforms: number[];
 }
 
-export interface Configuration {
+export class Configuration {
   id: number;
   country: string;
   state: string;
@@ -95,7 +95,7 @@ export interface Configuration {
   language: string;
 }
 
-export interface CreditCard {
+export class CreditCard {
   id: number;
   type: string;
   country: string;
@@ -104,10 +104,10 @@ export interface CreditCard {
   last_four: string;
 }
 
-export interface Parent {
+export class Parent {
   id: number;
   configuration: Configuration;
-  credit_card: CreditCard;
+  creditCard: CreditCard;
   kids: Kid[];
   role: number;
   email: string;
@@ -133,7 +133,31 @@ const initialState: Parent = {
     last_four: null,
     country: null
   },
-  kids: [],
+  kids: [{
+    id: null,
+    name: null,
+    brownie_points_available: null,
+    brownie_points_free: null,
+    brownie_points_total: null,
+    customization: {
+
+    },
+    gender: null,
+    goal_badge: {
+
+    },
+    grade: null,
+    topic_data: {
+
+    },
+    won_badges: [],
+    reminder_days: null,
+    performances: null,
+    reminder_hour: null,
+    questions_available_today: null,
+    photo_time: null,
+    platforms: null
+  }],
   role: null,
   email: null,
   name: null,
