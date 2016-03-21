@@ -1,6 +1,7 @@
 /// <reference path="../../../../node_modules/immutable/dist/immutable.d.ts"/>
 
 import {fromJS} from 'immutable';
+import {AdaptClass} from 'data-adapter';
 
 export class Badge {
   id: number;
@@ -106,6 +107,7 @@ export class CreditCard {
 
 export class Parent {
   id: number;
+  token: string;
   configuration: Configuration;
   creditCard: CreditCard;
   kids: Kid[];
@@ -114,5 +116,7 @@ export class Parent {
   name: string;
   timezone: string;
 }
+
+export class Guest {}
 
 const initialState: Parent = null;
