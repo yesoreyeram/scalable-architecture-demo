@@ -32,14 +32,14 @@ export class Question {
   standard: Standard;
   text: string;
   hint: string;
-  right_answer: string;
-  wrong_answer1: string;
-  wrong_answer2: string;
-  wrong_answer3: string;
+  rightAnswer: string;
+  wrongAnswer1: string;
+  wrongAnswer2: string;
+  wrongAnswer3: string;
   difficulty: number;
-  attempts_count: number;
-  correct_count: number;
-  minutes_taken: number;
+  attemptsCount: number;
+  correctCount: number;
+  minutesTaken: number;
 }
 
 export class TopicData {
@@ -56,33 +56,33 @@ export class Customization {
 
 export class Performances {
   id: number;
-  questions_count: number;
+  questionsCount: number;
   standard: Standard;
-  attempts_count: number;
-  current_count: number;
-  brownie_points_earned: number;
-  seconds_taken: number;
-  last_64_flag: number;
-  daily_scores: any;
+  attemptsCount: number;
+  currentCount: number;
+  browniePointsEarned: number;
+  secondsTaken: number;
+  last64Flag: number;
+  dailyScores: any;
 }
 
 export class Kid {
   id: number;
   customization: Customization;
   performances: Performances[];
-  topic_data: TopicData[];
-  brownie_points_total: number;
-  brownie_points_available: number;
-  brownie_points_free: number;
-  questions_available_today: number;
-  goal_badge: Badge;
-  won_badges: Badge[];
+  topicData: TopicData[];
+  browniePointsTotal: number;
+  browniePointsAvailable: number;
+  browniePointsFree: number;
+  questionsAvailableToday: number;
+  goalBadge: Badge;
+  wonBadges: Badge[];
   name: string;
   gender: number;
   grade: number;
-  photo_time: Date;
-  reminder_days: number[];
-  reminder_hour: number[];
+  photoTime: Date;
+  reminderDays: number[];
+  reminderHour: number[];
   platforms: number[];
 }
 
@@ -91,7 +91,7 @@ export class Configuration {
   country: string;
   state: string;
   city: string;
-  phone_code: string;
+  phoneCode: string;
   language: string;
 }
 
@@ -99,9 +99,9 @@ export class CreditCard {
   id: number;
   type: string;
   country: string;
-  expiry_month: string;
-  expiry_year: string;
-  last_four: string;
+  expiryMonth: string;
+  expiryYear: string;
+  lastFour: string;
 }
 
 export class Parent {
@@ -115,51 +115,4 @@ export class Parent {
   timezone: string;
 }
 
-const initialState: Parent = {
-  id: null,
-  configuration: {
-    id: null,
-    country: null,
-    state: null,
-    city: null,
-    phone_code: null,
-    language: null
-  },
-  credit_card: {
-    id: null,
-    type: null,
-    expiry_month: null,
-    expiry_year: null,
-    last_four: null,
-    country: null
-  },
-  kids: [{
-    id: null,
-    name: null,
-    brownie_points_available: null,
-    brownie_points_free: null,
-    brownie_points_total: null,
-    customization: {
-
-    },
-    gender: null,
-    goal_badge: {
-
-    },
-    grade: null,
-    topic_data: {
-
-    },
-    won_badges: [],
-    reminder_days: null,
-    performances: null,
-    reminder_hour: null,
-    questions_available_today: null,
-    photo_time: null,
-    platforms: null
-  }],
-  role: null,
-  email: null,
-  name: null,
-  timezone: null
-};
+const initialState: Parent = null;
