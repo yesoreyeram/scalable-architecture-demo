@@ -1,14 +1,20 @@
-import {Command} from '../commands/command.service';
+import {ExecutableCommand} from './executable-command.service';
+import {Command} from './command.service';
+import {CommandBuilder} from './command-builder.service';
 
-export abstract class JsonCommand {
-  protected _commands: Command[];
-  private _method: string;
-  public get method(): string {
-    return this._method;
+export class JsonCommand extends ExecutableCommand {
+  concat(command: Command): this {
+    this._commands.push(command);
+    return this;
   }
-  public set method(value: string) {
-    this._method = value;
+  serialize(): string | Blob | ArrayBuffer {
+    let currentSerialized: string;
+    try {
+      currentSerialized = JSON.stringify(this.payload);
+    } catch (e) {
+      throw new Error('Invalid JSON command');
+    }
+    const serialized = this._commands.map(c => c.serialize()).concat(currentSerialized).join(',');
+    return `[${serialized}]`;
   }
-  abstract concat(command: Command): void;
-  abstract serialize(): string | Blob | ArrayBuffer;
 }

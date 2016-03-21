@@ -117,6 +117,19 @@ export class Parent {
   timezone: string;
 }
 
+export class Teacher {}
+
+
 export class Guest {}
 
-const initialState: Parent = null;
+export class App {
+  guest: Guest;
+  parent: Parent;
+  teacher: Teacher;
+}
+
+const initialState: App = {
+  guest: {},
+  parent: null,
+  teacher: null
+};
