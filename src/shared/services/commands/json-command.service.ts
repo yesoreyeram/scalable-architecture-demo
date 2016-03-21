@@ -1,6 +1,5 @@
 import {ExecutableCommand} from './executable-command.service';
 import {Command} from './command.service';
-import {CommandBuilder} from './command-builder.service';
 
 export class JsonCommand extends ExecutableCommand {
   concat(command: Command): this {
@@ -12,7 +11,7 @@ export class JsonCommand extends ExecutableCommand {
     try {
       currentSerialized = JSON.stringify(this.payload);
     } catch (e) {
-      throw new Error('Invalid JSON command');
+      throw new Error(`Invalid JSON command ${this.payload.toString()}`);
     }
     const serialized = this._commands.map(c => c.serialize()).concat(currentSerialized).join(',');
     return `[${serialized}]`;

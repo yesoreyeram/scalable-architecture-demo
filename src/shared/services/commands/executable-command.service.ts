@@ -16,13 +16,14 @@ export enum CommandState {
 
 export abstract class ExecutableCommand extends Command {
   protected _commands: Command[];
-  private _method: string;
+  private _method: any;
   private _payload: any;
   private _gateway: Gateway;
   private _id: number = 0;
   private _state: CommandState = CommandState.IDLE
   private static _id: number = 0;
   constructor() {
+    super();
     ExecutableCommand._id += 1;
     this._id = ExecutableCommand._id;
   }
@@ -35,10 +36,10 @@ export abstract class ExecutableCommand extends Command {
   public set payload(value: any) {
     this._payload = value;
   }
-  public get method(): string {
+  public get method(): any {
     return this._method;
   }
-  public set method(value: string) {
+  public set method(value: any) {
     this._method = value;
   }
   public set gateway(value: Gateway) {

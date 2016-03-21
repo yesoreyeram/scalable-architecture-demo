@@ -4,6 +4,7 @@ import {Gateway} from './gateway.service';
 import {Http} from 'angular2/http';
 import {Inject} from 'angular2/core';
 import {API_URL} from '../../config/config';
+import {RequestMethod} from 'angular2/http';
 
 export class RestfulGateway extends Gateway {
   constructor(private http: Http, @Inject(API_URL) private API_URL: string) {
@@ -22,14 +23,14 @@ export class RestfulGateway extends Gateway {
     return this.http.delete(this.getUrl(command));
   }
   send(command: RestfulCommand): Observable<any> {
-    switch (command.method.toLowerCase()) {
-      case 'get':
+    switch (command.method) {
+      case RequestMethod.Get:
       return this.get(command);
-      case 'post':
+      case RequestMethod.Post:
       return this.post(command);
-      case 'put':
+      case RequestMethod.Put:
       return this.put(command);
-      case 'delete':
+      case RequestMethod.Delete:
       return this.delete(command);
     }
     throw new Error('The requested REST method is not supported');
