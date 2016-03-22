@@ -16,7 +16,7 @@ export enum CommandState {
 
 export abstract class ExecutableCommand extends Command {
   private static _id: number = 0;
-  protected _commands: Command[];
+  protected _commands: Command[] = [];
   private _method: any;
   private _payload: any;
   private _gateway: Gateway;
