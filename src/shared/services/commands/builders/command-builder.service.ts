@@ -11,8 +11,7 @@ export abstract class CommandBuilder {
     this._method = method;
     return this;
   }
-  setPayload(payload: Object, type: Function): this {
-    // this._payload = denormalize(payload, type);
+  setPayload(payload: Object): this {
     return this;
   }
   abstract build(): Command;

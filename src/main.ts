@@ -18,6 +18,9 @@ import {API_URL} from './shared/config/config';
 import {AuthConfig} from 'angular2-jwt';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
+import {RemoteService} from './shared/services/remote-services/remote-service.service';
+import {RestfulService} from './shared/services/remote-services/restful-remote-service.service';
+
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(AppComponent, [
@@ -29,7 +32,8 @@ bootstrap(AppComponent, [
   provide(CommandBuilder, { useClass: RestfulCommandBuilder }),
   provideStore({ parent: parentReducer }),
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
-  provide(AuthConfig, { useValue: {} })
+  provide(AuthConfig, { useValue: {} }),
+  provide(RemoteService, { useValue: RestfulService, multi: true })
 ]);
 
 // In order to start the Service Worker located at "./sw.js"
