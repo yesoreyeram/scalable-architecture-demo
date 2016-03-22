@@ -1,21 +1,19 @@
+import {Injectable} from 'angular2/core';
 import {Store} from '@ngrx/store';
-import {Gateway} from '../gateways/gateway.service';
+import {Parent} from '../store/bp-store';
+import {Observable} from 'rxjs/Observable';
 import {CommandBuilder} from '../commands/builders/command-builder.service';
 
-export interface SignUpData {
-
-}
-
-export interface SignInData {
-
-}
-
+@Injectable()
 export class ParentModel {
-  constructor(private store: Store<any>, private builder: CommandBuilder) {}
-  signup(data: SignUpData) {
-
+  parent$: Observable<Parent>;
+  constructor(private store: Store<Parent>, private builder: CommandBuilder) {
+    this.parent$ = store.select('parent');
   }
-  signin(data: SignInData) {
-
+  setEmail(email: string) {
+    this.store.next({
+      type: 'set-email',
+      payload: { email }
+    });
   }
 }

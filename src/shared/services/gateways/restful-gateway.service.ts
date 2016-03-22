@@ -1,14 +1,16 @@
 import {RestfulCommand} from '../commands/decorators/restful-command.service';
 import {Observable} from 'rxjs/Observable';
 import {Gateway} from './gateway.service';
-import {Http} from 'angular2/http';
+import {Http, RequestMethod} from 'angular2/http';
 import {Inject} from 'angular2/core';
 import {API_URL} from '../../config/config';
-import {RequestMethod} from 'angular2/http';
+import {Injectable} from 'angular2/core';
 
+@Injectable()
 export class RestfulGateway extends Gateway {
   constructor(private http: Http, @Inject(API_URL) private API_URL: string) {
     super();
+    console.log(this.http, this.API_URL);
   }
   get(command: RestfulCommand): Observable<any> {
     return this.http.get(this.getUrl(command));

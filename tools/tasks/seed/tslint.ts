@@ -17,7 +17,6 @@ export = () => {
       rulesDirectory: NG2LINT_RULES
     }))
     .pipe(plugins.tslint.report(plugins.tslintStylish, {
-      emitError: true,
       sort: true,
       bell: true
     }));

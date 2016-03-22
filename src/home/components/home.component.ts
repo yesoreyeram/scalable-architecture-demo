@@ -1,5 +1,8 @@
 import {Component} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import {Parent} from '../../shared/services/store/bp-store';
+import {ParentModel} from '../../shared/services/models/parent.model';
 
 @Component({
   selector: 'sd-home',
@@ -9,13 +12,12 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
   directives: [FORM_DIRECTIVES, CORE_DIRECTIVES]
 })
 export class HomeComponent {
-  constructor() {}
+  parent$: Observable<Parent>;
+  email: string;
+  constructor(private parent: ParentModel) {}
 
-  /*
-   * @param newname  any text as input.
-   * @returns return false to prevent default form submit behavior to refresh the page.
-   */
-  addName(): boolean {
-    return false;
+  setEmail() {
+    this.parent.setEmail(this.email);
+    this.email = '';
   }
 }

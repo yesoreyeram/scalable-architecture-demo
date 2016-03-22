@@ -1,5 +1,5 @@
 import {Command, CommandResult} from '../command.service';
-import {ExecutableCommand} from '../executable-command.service'
+import {ExecutableCommand} from '../executable-command.service';
 import {Observable} from 'rxjs/Observable';
 import {RequestMethod} from 'angular2/http';
 

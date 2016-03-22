@@ -1,7 +1,8 @@
 import {Command} from '../command.service';
-import {denormalize} from 'data-adapter';
 import {Gateway} from '../../gateways/gateway.service';
+import {Injectable} from 'angular2/core';
 
+@Injectable()
 export abstract class CommandBuilder {
   protected _method: string;
   protected _payload: any;
@@ -11,7 +12,7 @@ export abstract class CommandBuilder {
     return this;
   }
   setPayload(payload: Object, type: Function): this {
-    this._payload = denormalize(payload, type);
+    // this._payload = denormalize(payload, type);
     return this;
   }
   abstract build(): Command;

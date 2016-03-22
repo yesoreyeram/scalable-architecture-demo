@@ -15,13 +15,13 @@ export enum CommandState {
 };
 
 export abstract class ExecutableCommand extends Command {
+  private static _id: number = 0;
   protected _commands: Command[];
   private _method: any;
   private _payload: any;
   private _gateway: Gateway;
   private _id: number = 0;
-  private _state: CommandState = CommandState.IDLE
-  private static _id: number = 0;
+  private _state: CommandState = CommandState.IDLE;
   constructor() {
     super();
     ExecutableCommand._id += 1;

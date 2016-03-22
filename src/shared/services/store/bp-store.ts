@@ -1,8 +1,9 @@
 /// <reference path="../../../../node_modules/immutable/dist/immutable.d.ts"/>
 
-import {fromJS} from 'immutable';
-import {AdaptClass} from 'data-adapter';
-import {toSnakeCase} from '../../utils/name-formatter.util';
+import {fromJS, Map} from 'immutable';
+//import {toSnakeCase} from '../../utils/name-formatter.util';
+
+//const name = (obj: Object, name: string) => toSnakeCase(name);
 
 export class Badge {
   id: number;
@@ -68,10 +69,6 @@ export class Performances {
   dailyScores: any;
 }
 
-@AdaptClass({
-  name: (obj, name) => toSnakeCase(name),
-  denormalize: (obj: any, name: any) => obj[name].uri = `/parent/${obj.id}/child/${obj[name].id}`
-})
 export class Kid {
   id: number;
   customization: Customization;
@@ -124,7 +121,6 @@ export class Parent {
 
 export class Teacher {}
 
-
 export class Guest {}
 
 export class App {
@@ -133,8 +129,25 @@ export class App {
   teacher: Teacher;
 }
 
-const initialState: App = {
+export const initialState: Map<string, Object> = fromJS({
   guest: {},
-  parent: null,
+  parent: {
+    id: 2,
+    token: 'asdasdasd',
+    configuration: null,
+    creditCard: {
+      country: 'bg',
+      expiryMonth: '11',
+      expiryYear: '2018',
+      lastFour: '1231',
+      type: 'visa',
+      id: 1
+    },
+    kids: null,
+    role: 1,
+    email: 'foo@bar.baz',
+    name: 'Foobar',
+    timezone: 'PST'
+  },
   teacher: null
-};
+});
