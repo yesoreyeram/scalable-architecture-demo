@@ -2,6 +2,7 @@
 
 import {fromJS} from 'immutable';
 import {AdaptClass} from 'data-adapter';
+import {toSnakeCase} from '../../utils/name-formatter.util';
 
 export class Badge {
   id: number;
@@ -67,6 +68,10 @@ export class Performances {
   dailyScores: any;
 }
 
+@AdaptClass({
+  name: (obj, name) => toSnakeCase(name),
+  denormalize: (obj: any, name: any) => obj[name].uri = `/parent/${obj.id}/child/${obj[name].id}`
+})
 export class Kid {
   id: number;
   customization: Customization;
