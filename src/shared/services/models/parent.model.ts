@@ -2,29 +2,25 @@ import {Injectable, Inject} from 'angular2/core';
 import {Store} from '@ngrx/store';
 import {Parent} from '../store/bp-store';
 import {RemoteService} from '../remote-services/remote-service.service';
+import {Model} from './base.model';
 
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
 
+import {ParentActions} from '../actions/actions';
 
 @Injectable()
-export class ParentModel {
+export class ParentModel extends Model {
   parent$: Observable<Parent>;
-  constructor(private store: Store<Parent>, @Inject(RemoteService) private services: RemoteService[]) {
+  constructor(private store: Store<Parent>, @Inject(RemoteService) protected services: RemoteService[]) {
+    super();
     this.parent$ = store.select('parent');
   }
-  register() {
-
+  signup(email: string, password: string) {
+    const action = ParentActions.signup(email, password);
+    this.performAsyncAction(action);
   }
-  login() {
-
-  }
-  setEmail(email: string) {
-    let action = {
-      type: 'set-email',
-      payload: { email }
-    };
-    Observable.forkJoin(this.services.map(res => res.process(action)))
-      .subscribe(() => this.store.next(action), (e: any) => console.error(e));
+  signin(email: string, password: string) {
+    const action = ParentActions.signup(email, password);
+    this.performAsyncAction(action);
   }
 }

@@ -17,7 +17,7 @@ export class HomeComponent {
   constructor(private parent: ParentModel) {}
 
   setEmail() {
-    this.parent.setEmail(this.email);
+    // this.parent.setEmail(this.email);
     this.email = '';
   }
 }
