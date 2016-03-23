@@ -1,9 +1,12 @@
-import {RestfulGateway} from '../../gateways/restful-gateway.service';
-import {RestfulCommandBuilder} from './restful-command-builder.service';
-import {RestfulCommand} from '../decorators/restful-command.service';
+import {CommandBuilder} from './command-builder.service';
 import {JsonCommand} from '../json-command.service';
+import {RestfulCommand} from '../decorators/restful-command.service';
 import {RequestMethod} from 'angular2/http';
+import {Action} from '@ngrx/store';
+import {RestfulGateway} from '../../gateways/restful-gateway.service';
+
 import {Injectable} from 'angular2/core';
+
 import {
   SIGNUP_PARENT
 } from '../../actions/actions';
@@ -22,16 +25,16 @@ const BP_REST_MAPPER: { [id: string] : BpCommandBuilderCommand; } = {
 };
 
 @Injectable()
-export class RestfulBpCommandBulider extends RestfulCommandBuilder {
+export class BpRestfulCommandBuilder extends CommandBuilder {
   constructor(private gateway: RestfulGateway) {
     super();
   }
-  build(): RestfulCommand {
-    const command = BP_REST_MAPPER[this._method];
+  build(action: Action): RestfulCommand {
+    const command = BP_REST_MAPPER[action.type];
     if (command) {
       const jsonCmd = new JsonCommand();
       jsonCmd.gateway = this.gateway;
-      const cmd = command(this._payload, new RestfulCommand(jsonCmd));
+      const cmd = command(action.payload, new RestfulCommand(jsonCmd));
       return cmd;
     } else {
       throw new Error('Unknown method for handling');

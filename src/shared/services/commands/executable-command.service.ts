@@ -41,17 +41,17 @@ export abstract class ExecutableCommand extends Command {
   invoke(context?: Command): Observable<CommandResult> {
     context = context || this;
     context.state = CommandState.EXECUTING;
-    let result = new Observable<CommandResult>((result: Observer<CommandResult>) => {
+    let result = new Observable<CommandResult>((observer: Observer<CommandResult>) => {
       this._gateway.send(context).subscribe(response => {
         context.state = CommandState.INVOKED;
-        result.next({
+        observer.next({
           command: context,
           payload: context.processResponse(response)
         });
       }, (error: any) => {
         debugger;
-        result.error(error);
-      }, () => result.complete());
+        observer.error(error);
+      }, () => observer.complete());
     });
     return result;
   }
