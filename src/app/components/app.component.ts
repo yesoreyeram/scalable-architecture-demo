@@ -5,8 +5,8 @@ import {ToolbarComponent} from './toolbar.component';
 import {HomeComponent} from '../../home/components/home.component';
 import {AboutComponent} from '../../about/components/about.component';
 
-import {RemoteService} from '../../shared/services/remote-services/remote-service.service';
-import {RestfulService} from '../../shared/services/remote-services/restful-remote-service.service';
+import {AsyncService} from '../../shared/services/async-services/async-service.service';
+import {RestfulService} from '../../shared/services/async-services/restful-async-service.service';
 
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
@@ -26,7 +26,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 
 
 const providers = [
-  provide(RemoteService, { useClass: RestfulService, multi: true }),
+  provide(AsyncService, { useClass: RestfulService, multi: true }),
   ROUTER_PROVIDERS,
   HTTP_PROVIDERS,
   provideStore({ parent: parentReducer }),

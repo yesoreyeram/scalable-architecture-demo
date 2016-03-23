@@ -13,7 +13,22 @@ export class JsonCommand extends ExecutableCommand {
     } catch (e) {
       throw new Error(`Invalid JSON command ${this.payload.toString()}`);
     }
-    const serialized = this._commands.map(c => c.serialize()).concat(currentSerialized).join(',');
-    return `[${serialized}]`;
+    if (!this._commands.length) {
+      return currentSerialized;
+    } else {
+      const serialized = this._commands.map(c => c.serialize()).concat(currentSerialized).join(',');
+      return `[${serialized}]`;
+    }
+  }
+  processResponse(response: any) {
+    try {
+      return JSON.parse(response);
+    } catch (e) {
+      debugger;
+      return {
+        foo: 42
+      };
+      // throw new Error(`Cannot\' parse ${response} to JSON.`);
+    }
   }
 }

@@ -13,11 +13,13 @@ import {ParentModel} from '../../shared/services/models/parent.model';
 })
 export class HomeComponent {
   parent$: Observable<Parent>;
-  email: string;
+  private email: string;
+  private password: string;
   constructor(private parent: ParentModel) {}
 
-  setEmail() {
-    // this.parent.setEmail(this.email);
+  signup() {
+    this.parent.signup(this.email, this.password);
     this.email = '';
+    this.password = '';
   }
 }

@@ -1,18 +1,12 @@
 import {Gateway} from '../gateways/gateway.service';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {Command} from './command.service';
+import {Command, CommandState} from './command.service';
 
 export interface CommandResult {
   command: Command;
   payload: any;
 }
-
-export enum CommandState {
-  IDLE,
-  EXECUTING,
-  INVOKED
-};
 
 export abstract class ExecutableCommand extends Command {
   private static _id: number = 0;
@@ -21,7 +15,6 @@ export abstract class ExecutableCommand extends Command {
   private _payload: any;
   private _gateway: Gateway;
   private _id: number = 0;
-  private _state: CommandState = CommandState.IDLE;
   constructor() {
     super();
     ExecutableCommand._id += 1;
@@ -45,16 +38,20 @@ export abstract class ExecutableCommand extends Command {
   public set gateway(value: Gateway) {
     this._gateway = value;
   }
-  invoke(): Observable<CommandResult> {
-    this._state = CommandState.EXECUTING;
+  invoke(context?: Command): Observable<CommandResult> {
+    context = context || this;
+    context.state = CommandState.EXECUTING;
     let result = new Observable<CommandResult>((result: Observer<CommandResult>) => {
-      this._gateway.send(this).subscribe(response => {
-        this._state = CommandState.INVOKED;
+      this._gateway.send(context).subscribe(response => {
+        context.state = CommandState.INVOKED;
         result.next({
-          command: this,
-          payload: response
+          command: context,
+          payload: context.processResponse(response)
         });
-      });
+      }, (error: any) => {
+        debugger;
+        result.error(error);
+      }, () => result.complete());
     });
     return result;
   }
