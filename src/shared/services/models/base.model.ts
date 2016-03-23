@@ -1,7 +1,8 @@
 import {AsyncService} from '../async-services/async-service.service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
-import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/mergeAll';
 
 import {Wove} from 'aspect.js';
 
@@ -18,13 +19,7 @@ export abstract class Model {
   protected services: AsyncService[];
   protected performAsyncAction(action: Action, success?: SuccessCallback, fail?: FailCallback) {
     console.log('Async started');
-    return Observable.forkJoin(this.services.map(s => s.process(action)))
-      .subscribe(() => {
-        debugger;
-        (<Function>success)();
-      }, () => {
-        debugger;
-        (<Function>fail)();
-      });
+    return Observable.merge.apply(Observable, this.services.map(s => s.process(action)))
+      .subscribe(success, fail);
   }
 }

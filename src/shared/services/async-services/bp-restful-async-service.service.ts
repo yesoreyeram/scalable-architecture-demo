@@ -6,21 +6,25 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {CommandResult} from '../commands/executable-command.service';
 
-
 @Injectable()
 export class BpRestfulService extends AsyncService {
   constructor(protected builder: BpRestfulCommandBuilder) {
     super();
   }
   process(action: Action) {
-    let result = new Observable<any>((observer: Observer<CommandResult>) => {
-      const command = this.builder.build(action);
-      command.invoke().subscribe(response => {
-        // Should be mapped to app specific data here
-        observer.next(response);
-      }, (error: any) => {
-        observer.error(error);
-      }, () => observer.complete());
+    let result = new Observable<CommandResult>((observer: Observer<any>) => {
+      this.builder.build(action)
+        .invoke().subscribe(response => {
+          // Should be mapped to app specific data here
+          const restfulPayload = response.payload;
+          if (response.payload.code === 200) {
+            observer.next(restfulPayload.payload);
+          } else {
+            observer.error(restfulPayload.payload);
+          }
+        }, (error: any) => {
+          observer.error(error);
+        }, () => observer.complete());
     });
     return result;
   }
