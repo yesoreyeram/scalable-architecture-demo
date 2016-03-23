@@ -5,6 +5,6 @@ import {Injectable} from 'angular2/core';
 @Injectable()
 export class RestfulService extends RemoteService {
   constructor(protected builder: RestfulCommandBuilder) {
-    super(builder);
+    super();
   }
 }
