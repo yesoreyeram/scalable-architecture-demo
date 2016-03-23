@@ -13,12 +13,18 @@ export class ParentModel {
   constructor(private store: Store<Parent>, @Inject(RemoteService) private services: RemoteService[]) {
     this.parent$ = store.select('parent');
   }
+  register() {
+
+  }
+  login() {
+
+  }
   setEmail(email: string) {
     let action = {
       type: 'set-email',
       payload: { email }
     };
     Observable.forkJoin(this.services.map(res => res.process(action)))
-      .subscribe(() => console.log('Luck!'), (e: any) => console.error(e));
+      .subscribe(() => this.store.next(action), (e: any) => console.error(e));
   }
 }
