@@ -15,15 +15,16 @@ export class ParentModel extends Model {
     super();
     this.parent$ = store.select('parent');
   }
-  signup(email: string, password: string) {
+  signUp(email: string, password: string) {
     const action = ParentActions.signup(email, password);
     this.performAsyncAction(action, () => {
-      console.log('AWESOME!');
+      this.store.dispatch(action);
     }, (error: any) => {
+      this.store.dispatch(action);
       console.log('ERROR', error);
     });
   }
-  signin(email: string, password: string) {
+  signIn(email: string, password: string) {
     const action = ParentActions.signup(email, password);
     this.performAsyncAction(action, () => {
       console.log('AWESOME!');

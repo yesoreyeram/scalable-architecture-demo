@@ -17,8 +17,8 @@ export class HomeComponent {
   private password: string;
   constructor(private parent: ParentModel) {}
 
-  signup() {
-    this.parent.signup(this.email, this.password);
+  signUp() {
+    this.parent.signUp(this.email, this.password);
     this.email = '';
     this.password = '';
   }

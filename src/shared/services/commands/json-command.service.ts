@@ -24,11 +24,8 @@ export class JsonCommand extends ExecutableCommand {
     try {
       return JSON.parse(response);
     } catch (e) {
-      debugger;
-      return {
-        foo: 42
-      };
-      // throw new Error(`Cannot\' parse ${response} to JSON.`);
+      console.warn(`Cannot parse the data ${response}.`);
+      return null;
     }
   }
 }
