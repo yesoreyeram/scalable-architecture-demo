@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {ParentActions} from '../actions/actions';
 import {AuthConfig} from 'angular2-jwt/angular2-jwt';
+import {persistToken} from '../auth/token.store';
 
 @Injectable()
 export class ParentModel extends Model {
@@ -20,7 +21,7 @@ export class ParentModel extends Model {
     const action = ParentActions.getGuestToken();
     this.performAsyncAction(action)
       .subscribe((data: any) => {
-        localStorage.setItem(this.authConfig.getConfig().tokenName, data.jwt);
+        persistToken(this.authConfig.getConfig().tokenName, data.jwt);
       }, (error: any) => {
         console.log(error);
       });
