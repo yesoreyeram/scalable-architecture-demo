@@ -2,17 +2,23 @@ import {Action} from '@ngrx/store';
 
 import {
   SIGNIN_PARENT,
-  SIGNUP_PARENT
+  SIGNUP_PARENT,
+  GET_GUEST_TOKEN
 } from '../parent.actions';
 
 export const ParentActions = {
-  signin(email: string, password: string): Action {
+  getGuestToken(): Action {
+    return {
+      type: GET_GUEST_TOKEN
+    };
+  },
+  signIn(email: string, password: string): Action {
     return {
       payload: { email, password },
       type: SIGNIN_PARENT
     };
   },
-  signup(email: string, password: string): Action {
+  signUp(email: string, password: string): Action {
     return {
       payload: { email, password },
       type: SIGNUP_PARENT

@@ -8,7 +8,8 @@ import {RestfulGateway} from '../../gateways/restful-gateway.service';
 import {Injectable} from 'angular2/core';
 
 import {
-  SIGNUP_PARENT
+  SIGNUP_PARENT,
+  GET_GUEST_TOKEN
 } from '../../actions/actions';
 
 interface BpCommandBuilderCommand {
@@ -20,6 +21,15 @@ const BP_REST_MAPPER: { [id: string] : BpCommandBuilderCommand; } = {
     cmd.method = RequestMethod.Post;
     cmd.payload = payload;
     cmd.setResource([{ name: 'parent', value: '' }]);
+    return cmd;
+  },
+  [GET_GUEST_TOKEN](payload: any, cmd: RestfulCommand): RestfulCommand {
+    cmd.method = RequestMethod.Post;
+    cmd.payload = {
+      authorizable: 'guest',
+      authorizable_type: 'guest'
+    };
+    cmd.setResource([{ name: 'auth', value: '' }]);
     return cmd;
   }
 };

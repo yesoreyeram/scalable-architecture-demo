@@ -9,7 +9,7 @@ export class JsonCommand extends ExecutableCommand {
   serialize(): string | Blob | ArrayBuffer {
     let currentSerialized: string;
     try {
-      currentSerialized = JSON.stringify(this.payload);
+      currentSerialized = JSON.stringify(this.payload) || '';
     } catch (e) {
       throw new Error(`Invalid JSON command ${this.payload.toString()}`);
     }
@@ -27,5 +27,9 @@ export class JsonCommand extends ExecutableCommand {
       console.warn(`Cannot parse the data ${response}.`);
       return null;
     }
+  }
+
+  get mimeType(): string {
+    return 'application/json';
   }
 }

@@ -18,12 +18,25 @@ import {API_URL} from '../../shared/config/config';
 import {parentReducer} from '../../shared/services/reducers/parent.reducer';
 import {ParentModel} from '../../shared/services/models/parent.model';
 
-// import {CommandBuilder} from './shared/services/commands/builders/command-builder.service';
-
 import {RestfulGateway} from '../../shared/services/gateways/restful-gateway.service';
 
 import {HTTP_PROVIDERS} from 'angular2/http';
+import {BP_HTTP} from '../../shared/services/channels/bp-http.channel';
+import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
 
+const API_SCHEMA = 'http:';
+const API_HOST = 'localhost:3000';
+const API_PATH = 'v1';
+
+// const getDefaultToken = () => {
+//   return btoa(JSON.stringify({
+//     typ: 'JWT',
+//     alg: 'none'
+//   })) + '.' + btoa(JSON.stringify({
+//     aud: 'guest',
+//     sub: 'guest'
+//   })) + '.';
+// };
 
 const providers = [
   provide(AsyncService, { useClass: BpRestfulService, multi: true }),
@@ -33,8 +46,14 @@ const providers = [
   provideStore({ parent: parentReducer }),
   ParentModel,
   RestfulGateway,
-  provide(API_URL, { useValue: 42 }),
-  provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
+  provide(API_URL, { useValue: `${API_SCHEMA}//${API_HOST}/${API_PATH}` }),
+  provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
+  provide(AuthConfig, {
+    useValue: new AuthConfig({
+      noJwtError: 'No JWT'
+    })
+  }),
+  provide(BP_HTTP, { useClass: AuthHttp })
 ];
 
 @Component({

@@ -1,12 +1,13 @@
 import {RestfulCommand} from '../commands/decorators/restful-command.service';
 import {Gateway} from './gateway.service';
 import {Inject, Injectable} from 'angular2/core';
-import {Http, RequestMethod, Response} from 'angular2/http';
+import {Http, RequestMethod, Response, RequestOptionsArgs, Headers} from 'angular2/http';
 import {API_URL} from '../../config/config';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/merge';
+import {BP_HTTP} from '../channels/bp-http.channel';
 
 export interface RestfulResponse {
   code: number;
@@ -15,15 +16,19 @@ export interface RestfulResponse {
 
 @Injectable()
 export class RestfulGateway extends Gateway {
-  constructor(private http: Http, @Inject(API_URL) private API_URL: string) {
+  constructor(@Inject(BP_HTTP) private http: Http, @Inject(API_URL) private API_URL: string) {
     super();
-    console.log(this.http, this.API_URL);
   }
   get(command: RestfulCommand): Observable<Response> {
     return this.http.get(this.getUrl(command));
   }
   post(command: RestfulCommand): Observable<Response> {
-    return this.http.post(this.getUrl(command), command.serialize().toString());
+    let options: RequestOptionsArgs = {
+      headers: new Headers({
+        'Content-Type': command.mimeType
+      })
+    };
+    return this.http.post(this.getUrl(command), command.serialize().toString(), options);
   }
   put(command: RestfulCommand): Observable<Response> {
     return this.http.put(this.getUrl(command), command.serialize().toString());

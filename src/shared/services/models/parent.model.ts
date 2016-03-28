@@ -7,29 +7,39 @@ import {Model} from './base.model';
 import {Observable} from 'rxjs/Observable';
 
 import {ParentActions} from '../actions/actions';
+import {AuthConfig} from 'angular2-jwt/angular2-jwt';
 
 @Injectable()
 export class ParentModel extends Model {
   parent$: Observable<Parent>;
-  constructor(private store: Store<Parent>, @Inject(AsyncService) protected services: AsyncService[]) {
+  constructor(private store: Store<Parent>, @Inject(AsyncService) protected services: AsyncService[], private authConfig: AuthConfig) {
     super();
     this.parent$ = store.select('parent');
   }
+  getGuestToken() {
+    const action = ParentActions.getGuestToken();
+    this.performAsyncAction(action)
+      .subscribe((data: any) => {
+        localStorage.setItem(this.authConfig.getConfig().tokenName, data.jwt);
+      }, (error: any) => {
+        console.log(error);
+      });
+  }
   signUp(email: string, password: string) {
-    const action = ParentActions.signup(email, password);
-    this.performAsyncAction(action, () => {
-      this.store.dispatch(action);
-    }, (error: any) => {
-      this.store.dispatch(action);
-      console.log('ERROR', error);
-    });
+    const action = ParentActions.signUp(email, password);
+    this.performAsyncAction(action)
+      .subscribe(() => this.store.dispatch(action),
+        (error: any) => {
+          this.store.dispatch(action);
+          console.log('ERROR', error);
+        });
   }
   signIn(email: string, password: string) {
-    const action = ParentActions.signup(email, password);
-    this.performAsyncAction(action, () => {
-      console.log('AWESOME!');
-    }, (error: any) => {
-      console.log('ERROR', error);
-    });
+    const action = ParentActions.signIn(email, password);
+    this.performAsyncAction(action)
+      .subscribe(() => console.log('AWESOME!'),
+        (error: any) => {
+          console.log('ERROR', error);
+        });
   }
 }

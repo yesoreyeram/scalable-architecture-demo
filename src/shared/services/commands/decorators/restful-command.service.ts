@@ -41,6 +41,9 @@ export class RestfulCommand extends Command {
   get payload(): any {
     return this._delegate.payload;
   }
+  get mimeType(): string {
+    return this._delegate.mimeType;
+  }
   processResponse(response: RestfulResponse): any {
     return {
       code: response.code,

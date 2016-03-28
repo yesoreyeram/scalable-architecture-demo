@@ -17,9 +17,19 @@ export class HomeComponent {
   private password: string;
   constructor(private parent: ParentModel) {}
 
+  getToken() {
+    this.parent.getGuestToken();
+  }
+
+  signIn() {
+    this.parent.signIn(this.email, this.password);
+    // this.email = '';
+    // this.password = '';
+  }
+
   signUp() {
     this.parent.signUp(this.email, this.password);
-    this.email = '';
-    this.password = '';
+    // this.email = '';
+    // this.password = '';
   }
 }

@@ -19,6 +19,7 @@ export abstract class Command {
   get state(): CommandState {
     return this._state;
   }
+  mimeType: string;
   abstract invoke(): Observable<CommandResult>;
   abstract concat(command: Command): void;
   abstract serialize(): string | Blob | ArrayBuffer;
