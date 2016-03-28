@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-
-import {NameListService} from '../../shared/services/name-list.service';
+import {Parent} from '../../shared/services/store/bp-store';
+import {ParentModel} from '../../shared/services/models/parent.model';
 
 @Component({
   selector: 'sd-home',
@@ -11,16 +12,14 @@ import {NameListService} from '../../shared/services/name-list.service';
   directives: [FORM_DIRECTIVES, CORE_DIRECTIVES]
 })
 export class HomeComponent {
-  newName: string;
-  constructor(public nameListService: NameListService) {}
+  parent$: Observable<Parent>;
+  private email: string;
+  private password: string;
+  constructor(private parent: ParentModel) {}
 
-  /*
-   * @param newname  any text as input.
-   * @returns return false to prevent default form submit behavior to refresh the page.
-   */
-  addName(): boolean {
-    this.nameListService.add(this.newName);
-    this.newName = '';
-    return false;
+  signUp() {
+    this.parent.signUp(this.email, this.password);
+    this.email = '';
+    this.password = '';
   }
 }
