@@ -1,14 +1,14 @@
-import {AsyncService} from './base.async-service.ts';
+import {AsyncService} from './base.async-service';
 import {Injectable} from 'angular2/core';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {CommandResult} from '../commands/base.command.ts';
+import {CommandResult} from '../commands/base.command';
 import {JsonPayload} from '../commands/payloads/json.command-payload';
 import {RequestMethod} from 'angular2/http';
 import {SIGNIN_PARENT, GET_GUEST_TOKEN, SIGNUP_PARENT} from '../actions/parent.actions';
-import {RestfulCommand} from '../commands/restful.command.ts';
-import {RestfulGateway} from '../gateways/restful.gateway.ts';
+import {RestfulCommand} from '../commands/restful.command';
+import {RestfulGateway} from '../gateways/restful.gateway';
 
 interface RestfulCommandBuilder {
   (payload: any, cmd: RestfulCommand): RestfulCommand;

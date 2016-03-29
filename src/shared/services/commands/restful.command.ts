@@ -1,4 +1,4 @@
-import {Command} from './base.command.ts';
+import {Command} from './base.command';
 
 export interface RestfulResource {
   name: string;

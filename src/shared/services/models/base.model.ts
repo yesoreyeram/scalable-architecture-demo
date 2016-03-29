@@ -1,4 +1,4 @@
-import {AsyncService} from '../async-services/base.async-service.ts';
+import {AsyncService} from '../async-services/base.async-service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import 'rxjs/add/observable/merge';

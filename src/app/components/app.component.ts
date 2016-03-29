@@ -5,8 +5,8 @@ import {ToolbarComponent} from './toolbar.component';
 import {HomeComponent} from '../../home/components/home.component';
 import {AboutComponent} from '../../about/components/about.component';
 
-import {AsyncService} from '../../shared/services/async-services/base.async-service.ts';
-import {BpRestfulService} from '../../shared/services/async-services/bp-restful.async-service.ts';
+import {AsyncService} from '../../shared/services/async-services/base.async-service';
+import {BpRestfulService} from '../../shared/services/async-services/bp-restful.async-service';
 
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
@@ -15,12 +15,12 @@ import {API_URL} from '../../shared/config/config';
 import {parentReducer} from '../../shared/services/reducers/parent.reducer';
 import {ParentModel} from '../../shared/services/models/parent.model';
 
-import {RestfulGateway} from '../../shared/services/gateways/restful.gateway.ts';
+import {RestfulGateway} from '../../shared/services/gateways/restful.gateway';
 
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {BP_HTTP} from '../../shared/services/channels/bp-http.channel';
 import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
-import {getToken} from '../../shared/services/auth/token-store.ts';
+import {getToken} from '../../shared/services/auth/token-store';
 
 const API_SCHEMA = 'http:';
 const API_HOST = 'localhost:3000';
