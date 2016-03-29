@@ -67,10 +67,8 @@ export abstract class Command {
           command: context,
           payload: context.parse(response)
         });
-      }, (error: any) => {
-        debugger;
-        observer.error(error);
-      }, () => observer.complete());
+      }, (error: any) => observer.error(context.parse(error)),
+        () => observer.complete());
     });
     return result;
   }

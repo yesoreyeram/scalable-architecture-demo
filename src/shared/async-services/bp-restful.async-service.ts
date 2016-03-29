@@ -60,8 +60,7 @@ export class BpRestfulService extends AsyncService {
         builder(action.payload, command)
           .invoke().subscribe(response => {
           // Should be mapped to app specific data here
-          const restfulPayload = response.payload;
-          observer.next(restfulPayload.payload);
+          observer.next(response.payload);
         }, (error: any) => {
           observer.error(error);
         }, () => observer.complete());

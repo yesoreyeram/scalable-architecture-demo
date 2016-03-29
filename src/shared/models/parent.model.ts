@@ -39,9 +39,12 @@ export class ParentModel extends Model {
   signIn(email: string, password: string) {
     const action = ParentActions.signIn(email, password);
     this.performAsyncAction(action)
-      .subscribe(() => this.store.dispatch(action),
-        (error: any) => {
-          console.log('ERROR', error);
-        });
+      .subscribe((data: any) => {
+          action.payload = {
+            email, jwt: data.jwt
+          };
+          this.store.dispatch(action);
+          persistToken(this.authConfig.getConfig().tokenName, data.jwt);
+        }, (error: any) => console.log('ERROR', error));
   }
 }

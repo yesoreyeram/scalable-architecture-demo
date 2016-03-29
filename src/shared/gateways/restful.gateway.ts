@@ -8,11 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/merge';
 import {BP_HTTP} from '../channels/bp-http.channel';
-
-export interface RestfulResponse {
-  code: number;
-  payload: string;
-}
+import {Observer} from 'rxjs/Observer';
 
 @Injectable()
 export class RestfulGateway extends Gateway {
@@ -36,7 +32,7 @@ export class RestfulGateway extends Gateway {
   delete(command: RestfulCommand): Observable<Response> {
     return this.http.delete(this.getUrl(command));
   }
-  send(command: RestfulCommand): Observable<RestfulResponse> {
+  send(command: RestfulCommand): Observable<string> {
     let result: Observable<Response>;
     switch (command.method) {
       case RequestMethod.Get:
@@ -53,14 +49,22 @@ export class RestfulGateway extends Gateway {
       break;
     }
     if (result) {
-      return result.catch((response: Response) => {
-          return Observable.create((observer: any) => {
-            observer.next(response);
-          });
-        })
-        .map((response: Response) => {
-          return { payload: response.text(), code: response.status };
-        });
+      return new Observable<string>((observer: Observer<string>) => {
+        result.catch((response: Response) => {
+            return Observable.create((observer: any) => {
+              observer.next(response);
+            });
+          })
+          .forEach((response: Response) => {
+            const text = response.text();
+            const code = response.status;
+            if (code >= 200 && code <= 299) {
+              observer.next(text);
+            } else {
+              observer.error(text);
+            }
+          }, this);
+      });
     }
     throw new Error('The requested REST method is not supported');
   }

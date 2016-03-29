@@ -14,9 +14,6 @@ export class RestfulCommand extends Command {
     return this._resource.reduce((p, c) => `${p}/${c.name}/${c.value}`, '');
   }
   parse(response: any): any {
-    return {
-      code: response.code,
-      payload: this._payload.parse(response.payload)
-    };
+    return this._payload.parse(response);
   }
 }

@@ -6,7 +6,7 @@ export const parentReducer = (state = <any>initialState.get('parent'), action: A
   const p = action.payload;
   switch (action.type) {
     case ParentActions.SIGNIN_PARENT:
-      state = state.set('email', p.email).set('isLogged', true);
+      state = state.set('email', p.email).set('isLogged', true).set('token', action.payload.jwt);
     break;
     case ParentActions.SIGNUP_PARENT:
       state = state.set('email', p.email).set('name', p.name);
