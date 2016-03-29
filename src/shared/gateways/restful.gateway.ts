@@ -2,7 +2,7 @@ import {RestfulCommand} from '../commands/restful.command';
 import {Gateway} from './base.gateway';
 import {Inject, Injectable} from 'angular2/core';
 import {Http, RequestMethod, Response, RequestOptionsArgs, Headers} from 'angular2/http';
-import {API_URL} from '../../config/config';
+import {API_URL} from '../config/config';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
