@@ -2,7 +2,7 @@
 
 import {fromJS, Map} from 'immutable';
 import {AdaptClass} from 'data-adapter/dist/lib/index';
-//import {toSnakeCase} from '../../utils/name-formatter.util';
+import {toSnakeCase} from '../../utils/name-formatter.util';
 
 const name = (obj: Object, name: string) => toSnakeCase(name);
 

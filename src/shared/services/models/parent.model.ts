@@ -1,14 +1,14 @@
 import {Injectable, Inject} from 'angular2/core';
 import {Store} from '@ngrx/store';
 import {Parent} from '../store/bp-store';
-import {AsyncService} from '../async-services/async-service.service';
+import {AsyncService} from '../async-services/base.async-service.ts';
 import {Model} from './base.model';
 
 import {Observable} from 'rxjs/Observable';
 
-import {ParentActions} from '../actions/actions';
+import {ParentActions} from '../actions/index';
 import {AuthConfig} from 'angular2-jwt/angular2-jwt';
-import {persistToken} from '../auth/token.store';
+import {persistToken} from '../auth/token-store.ts';
 
 @Injectable()
 export class ParentModel extends Model {
@@ -25,7 +25,7 @@ export class ParentModel extends Model {
         this.store.dispatch(action);
         persistToken(this.authConfig.getConfig().tokenName, data.jwt);
       }, (error: any) => {
-        console.log(error);
+        console.log('ERROR', error);
       });
   }
   signUp(name: string, email: string, password: string) {

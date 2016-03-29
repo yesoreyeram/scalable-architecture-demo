@@ -1,4 +1,4 @@
-import {Command} from '../commands/command.service';
+import {Command} from '../commands/base.command.ts';
 import {Observable} from 'rxjs/Observable';
 
 export abstract class Gateway {

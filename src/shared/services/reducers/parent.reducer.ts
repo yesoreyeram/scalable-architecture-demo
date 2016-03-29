@@ -1,6 +1,6 @@
 import {initialState} from '../store/bp-store';
 import {Action} from '@ngrx/store';
-import * as ParentActions from '../actions/actions';
+import * as ParentActions from '../actions/index';
 
 export const parentReducer = (state = <any>initialState.get('parent'), action: Action) => {
   const p = action.payload;

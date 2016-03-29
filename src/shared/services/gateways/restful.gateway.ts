@@ -1,5 +1,5 @@
-import {RestfulCommand} from '../commands/decorators/restful-command.service';
-import {Gateway} from './gateway.service';
+import {RestfulCommand} from '../commands/restful.command.ts';
+import {Gateway} from './base.gateway.ts';
 import {Inject, Injectable} from 'angular2/core';
 import {Http, RequestMethod, Response, RequestOptionsArgs, Headers} from 'angular2/http';
 import {API_URL} from '../../config/config';
