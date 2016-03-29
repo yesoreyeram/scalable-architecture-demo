@@ -13,8 +13,9 @@ import {ParentModel} from '../../shared/services/models/parent.model';
 })
 export class HomeComponent {
   parent$: Observable<Parent>;
-  private email: string;
-  private password: string;
+  private email: string = 'minko@gechev.com';
+  private name: string;
+  private password: string = 'test';
   constructor(private parent: ParentModel) {}
 
   getToken() {
@@ -28,7 +29,7 @@ export class HomeComponent {
   }
 
   signUp() {
-    this.parent.signUp(this.email, this.password);
+    this.parent.signUp(this.name, this.email, this.password);
     // this.email = '';
     // this.password = '';
   }

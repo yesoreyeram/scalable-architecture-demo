@@ -1,10 +1,12 @@
 /// <reference path="../../../../node_modules/immutable/dist/immutable.d.ts"/>
 
 import {fromJS, Map} from 'immutable';
+import {AdaptClass} from 'data-adapter/dist/lib/index';
 //import {toSnakeCase} from '../../utils/name-formatter.util';
 
-//const name = (obj: Object, name: string) => toSnakeCase(name);
+const name = (obj: Object, name: string) => toSnakeCase(name);
 
+@AdaptClass({ name })
 export class Badge {
   id: number;
   name: string;
@@ -14,6 +16,7 @@ export class Badge {
   rank: number;
 }
 
+@AdaptClass({ name })
 export class Topic {
   id: number;
   subject: number;
@@ -22,6 +25,7 @@ export class Topic {
   name: string;
 }
 
+@AdaptClass({ name })
 export class Standard {
   id: number;
   topic: Topic;
@@ -30,6 +34,7 @@ export class Standard {
   description: string;
 }
 
+@AdaptClass({ name })
 export class Question {
   id: number;
   standard: Standard;
@@ -45,18 +50,21 @@ export class Question {
   minutesTaken: number;
 }
 
+@AdaptClass({ name })
 export class TopicData {
   id: number;
   topic: Topic;
   difficulty: number;
 }
 
+@AdaptClass({ name })
 export class Customization {
   id: number;
   avatar: number;
   title: number;
 }
 
+@AdaptClass({ name })
 export class Performances {
   id: number;
   questionsCount: number;
@@ -69,6 +77,7 @@ export class Performances {
   dailyScores: any;
 }
 
+@AdaptClass({ name })
 export class Kid {
   id: number;
   customization: Customization;
@@ -89,6 +98,7 @@ export class Kid {
   platforms: number[];
 }
 
+@AdaptClass({ name })
 export class Configuration {
   id: number;
   country: string;
@@ -98,6 +108,7 @@ export class Configuration {
   language: string;
 }
 
+@AdaptClass({ name })
 export class CreditCard {
   id: number;
   type: string;
@@ -107,9 +118,11 @@ export class CreditCard {
   lastFour: string;
 }
 
+@AdaptClass({ name })
 export class Parent {
   id: number;
   token: string;
+  isLogged: boolean;
   configuration: Configuration;
   creditCard: CreditCard;
   kids: Kid[];
@@ -132,8 +145,9 @@ export class App {
 export const initialState: Map<string, Object> = fromJS({
   guest: {},
   parent: {
-    id: 2,
-    token: 'asdasdasd',
+    id: null,
+    isLogged: false,
+    token: null,
     configuration: null,
     creditCard: {
       country: 'bg',

@@ -53,7 +53,7 @@ const providers = [
     useValue: new AuthConfig({
       noJwtError: 'No JWT',
       tokenName: 'bp-auth-token',
-      tokenGetter: getToken
+      tokenGetter: () => getToken('bp-auth-token')
     })
   }),
   provide(BP_HTTP, { useClass: AuthHttp })

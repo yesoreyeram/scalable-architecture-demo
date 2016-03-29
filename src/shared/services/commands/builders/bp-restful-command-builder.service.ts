@@ -11,6 +11,7 @@ import {
   SIGNUP_PARENT,
   GET_GUEST_TOKEN
 } from '../../actions/actions';
+import {SIGNIN_PARENT} from '../../actions/parent.actions';
 
 interface BpCommandBuilderCommand {
   (payload: any, cmd: RestfulCommand): RestfulCommand;
@@ -19,8 +20,12 @@ interface BpCommandBuilderCommand {
 const BP_REST_MAPPER: { [id: string] : BpCommandBuilderCommand; } = {
   [SIGNUP_PARENT](payload: any, cmd: RestfulCommand): RestfulCommand {
     cmd.method = RequestMethod.Post;
-    cmd.payload = payload;
-    cmd.setResource([{ name: 'parent', value: '' }]);
+    cmd.payload = {
+      name: payload.name,
+      password: payload.password,
+      email: payload.email
+    };
+    cmd.setResource([{ name: 'parents', value: '' }]);
     return cmd;
   },
   [GET_GUEST_TOKEN](payload: any, cmd: RestfulCommand): RestfulCommand {
@@ -28,6 +33,16 @@ const BP_REST_MAPPER: { [id: string] : BpCommandBuilderCommand; } = {
     cmd.payload = {
       authorizable: 'guest',
       authorizable_type: 'guest'
+    };
+    cmd.setResource([{ name: 'auth', value: '' }]);
+    return cmd;
+  },
+  [SIGNIN_PARENT](payload: any, cmd: RestfulCommand): RestfulCommand {
+    cmd.method = RequestMethod.Post;
+    cmd.payload = {
+      authorizable: payload.email,
+      authorizable_type: 'parent',
+      password: payload.password
     };
     cmd.setResource([{ name: 'auth', value: '' }]);
     return cmd;

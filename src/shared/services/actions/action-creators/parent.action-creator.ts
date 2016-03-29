@@ -18,9 +18,9 @@ export const ParentActions = {
       type: SIGNIN_PARENT
     };
   },
-  signUp(email: string, password: string): Action {
+  signUp(name: string, email: string, password: string): Action {
     return {
-      payload: { email, password },
+      payload: { name, email, password },
       type: SIGNUP_PARENT
     };
   }

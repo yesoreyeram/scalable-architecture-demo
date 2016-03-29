@@ -17,7 +17,7 @@ export class BpRestfulService extends AsyncService {
         .invoke().subscribe(response => {
           // Should be mapped to app specific data here
           const restfulPayload = response.payload;
-          if (response.payload.code === 200) {
+          if (response.payload.code >= 200 && response.payload.code <= 299) {
             observer.next(restfulPayload.payload);
           } else {
             observer.error(restfulPayload.payload);

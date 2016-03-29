@@ -21,24 +21,25 @@ export class ParentModel extends Model {
     const action = ParentActions.getGuestToken();
     this.performAsyncAction(action)
       .subscribe((data: any) => {
+        action.payload = data;
+        this.store.dispatch(action);
         persistToken(this.authConfig.getConfig().tokenName, data.jwt);
       }, (error: any) => {
         console.log(error);
       });
   }
-  signUp(email: string, password: string) {
-    const action = ParentActions.signUp(email, password);
+  signUp(name: string, email: string, password: string) {
+    const action = ParentActions.signUp(name, email, password);
     this.performAsyncAction(action)
       .subscribe(() => this.store.dispatch(action),
         (error: any) => {
-          this.store.dispatch(action);
           console.log('ERROR', error);
         });
   }
   signIn(email: string, password: string) {
     const action = ParentActions.signIn(email, password);
     this.performAsyncAction(action)
-      .subscribe(() => console.log('AWESOME!'),
+      .subscribe(() => this.store.dispatch(action),
         (error: any) => {
           console.log('ERROR', error);
         });
