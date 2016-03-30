@@ -19,6 +19,8 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {BP_HTTP} from '../channels/bp-http.channel';
 import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
 import {getToken} from '../auth/token-store.auth';
+import {kidReducer} from '../reducers/kid.reducer';
+import {KidsCollectionModel} from '../models/kids-collection.model';
 
 // const getDefaultToken = () => {
 //   return btoa(JSON.stringify({
@@ -34,8 +36,9 @@ const providers = [
   provide(AsyncService, { useClass: BpRestfulService, multi: true }),
   ROUTER_PROVIDERS,
   HTTP_PROVIDERS,
-  provideStore({ parent: parentReducer }),
+  provideStore({ parent: parentReducer, kids: kidReducer }),
   ParentModel,
+  KidsCollectionModel,
   RestfulGateway,
   provide(API_URL, { useValue: `${API_SCHEMA}//${API_HOST}/${API_PATH}` }),
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),

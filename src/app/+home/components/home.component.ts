@@ -1,8 +1,9 @@
 import {Component} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {Parent} from '../../store/bp.store';
+import {Parent, Kid} from '../../store/bp.store';
 import {ParentModel} from '../../models/parent.model';
+import {KidsCollectionModel} from '../../models/kids-collection.model';
 
 @Component({
   selector: 'sd-home',
@@ -15,7 +16,12 @@ export class HomeComponent {
   private email: string = 'minko@gechev.com';
   private name: string;
   private password: string = 'test';
-  constructor(private parent: ParentModel) {}
+
+  private kidName: string;
+  private kidGender: number;
+  private kidGrade: number;
+
+  constructor(private parent: ParentModel, private kids: KidsCollectionModel) {}
 
   getToken() {
     this.parent.getGuestToken();
@@ -31,5 +37,17 @@ export class HomeComponent {
     this.parent.signUp(this.name, this.email, this.password);
     // this.email = '';
     // this.password = '';
+  }
+
+  loadKids() {
+    this.kids.loadKids();
+  }
+  createKid() {
+    let kid = new Kid();
+    kid.gender = this.kidGender;
+    kid.grade = this.kidGrade;
+    kid.name = this.kidName;
+    this.kids.createKid(kid);
+    this.kidName = '';
   }
 }

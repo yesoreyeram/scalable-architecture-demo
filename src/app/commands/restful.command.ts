@@ -11,7 +11,15 @@ export class RestfulCommand extends Command {
     this._resource = resource;
   }
   get resource(): string {
-    return this._resource.reduce((p, c) => `${p}/${c.name}/${c.value}`, '');
+    return this._resource.reduce((p, c) => {
+      let value: string;
+      if (c.value) {
+        value = `/${c.value}`;
+      } else {
+        value = '';
+      }
+      return `${p}/${c.name}${value}`;
+    }, '');
   }
   parse(response: any): any {
     return this._payload.parse(response);

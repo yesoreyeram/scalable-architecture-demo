@@ -125,7 +125,6 @@ export class Parent {
   isLogged: boolean;
   configuration: Configuration;
   creditCard: CreditCard;
-  kids: Kid[];
   role: number;
   email: string;
   name: string;
@@ -140,10 +139,12 @@ export class App {
   guest: Guest;
   parent: Parent;
   teacher: Teacher;
+  kids: Kid[];
 }
 
 export const initialState: Map<string, Object> = fromJS({
   guest: {},
+  kids: [],
   parent: {
     id: null,
     isLogged: false,
@@ -157,7 +158,6 @@ export const initialState: Map<string, Object> = fromJS({
       type: 'visa',
       id: 1
     },
-    kids: null,
     role: 1,
     email: 'foo@bar.baz',
     name: 'Foobar',

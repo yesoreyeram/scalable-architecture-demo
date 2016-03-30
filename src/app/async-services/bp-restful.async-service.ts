@@ -9,6 +9,7 @@ import {RequestMethod} from 'angular2/http';
 import {SIGNIN_PARENT, GET_GUEST_TOKEN, SIGNUP_PARENT} from '../actions/parent.actions';
 import {RestfulCommand} from '../commands/restful.command';
 import {RestfulGateway} from '../gateways/restful.gateway';
+import {LOAD_KIDS, CREATE_KID} from '../actions/kid.actions';
 
 interface RestfulCommandBuilder {
   (payload: any, cmd: RestfulCommand): RestfulCommand;
@@ -42,6 +43,21 @@ const BP_REST_MAPPER: { [id: string] : RestfulCommandBuilder; } = {
       password: payload.password
     });
     cmd.setResource([{ name: 'auth', value: '' }]);
+    return cmd;
+  },
+  [LOAD_KIDS](payload: any, cmd: RestfulCommand): RestfulCommand {
+    cmd.method = RequestMethod.Get;
+    cmd.setResource([{ name: 'kids' }]);
+    return cmd;
+  },
+  [CREATE_KID](payload: any, cmd: RestfulCommand): RestfulCommand {
+    cmd.method = RequestMethod.Post;
+    cmd.setResource([{ name: 'kids' }]);
+    cmd.payload = new JsonPayload({
+      name: payload.name,
+      grade: payload.grade,
+      gender: payload.gender
+    });
     return cmd;
   }
 };
