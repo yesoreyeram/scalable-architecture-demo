@@ -4,7 +4,7 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 
 import {AsyncService} from '../async-services/base.async-service';
-import {BpRestfulService} from '../async-services/bp-restful.async-service';
+import {BpRestfulService} from '../async-services/bp-restful-service/bp-restful.async-service';
 
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
@@ -21,16 +21,7 @@ import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
 import {getToken} from '../auth/token-store.auth';
 import {kidReducer} from '../reducers/kid.reducer';
 import {KidsCollectionModel} from '../models/kids-collection.model';
-
-// const getDefaultToken = () => {
-//   return btoa(JSON.stringify({
-//     typ: 'JWT',
-//     alg: 'none'
-//   })) + '.' + btoa(JSON.stringify({
-//     aud: 'guest',
-//     sub: 'guest'
-//   })) + '.';
-// };
+import {BP_RESTFUL_COMMAND_BUILDERS, CommandBuilders} from '../async-services/bp-restful-service/command-builders/index';
 
 const providers = [
   provide(AsyncService, { useClass: BpRestfulService, multi: true }),
@@ -42,6 +33,9 @@ const providers = [
   RestfulGateway,
   provide(API_URL, { useValue: `${API_SCHEMA}//${API_HOST}/${API_PATH}` }),
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
+  provide(BP_RESTFUL_COMMAND_BUILDERS, {
+    useValue: CommandBuilders
+  }),
   provide(AuthConfig, {
     useValue: new AuthConfig({
       noJwtError: 'No JWT',
