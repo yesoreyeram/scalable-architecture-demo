@@ -47,6 +47,7 @@ const BP_REST_MAPPER: { [id: string] : RestfulCommandBuilder; } = {
   },
   [LOAD_KIDS](payload: any, cmd: RestfulCommand): RestfulCommand {
     cmd.method = RequestMethod.Get;
+    cmd.payload = new JsonPayload();
     cmd.setResource([{ name: 'kids' }]);
     return cmd;
   },
