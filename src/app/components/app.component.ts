@@ -2,25 +2,23 @@ import {Component, provide} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
 import {NavbarComponent} from './navbar.component';
 import {ToolbarComponent} from './toolbar.component';
-import {HomeComponent} from '../../home/components/home.component';
-import {AboutComponent} from '../../about/components/about.component';
 
-import {AsyncService} from '../../shared/async-services/base.async-service';
-import {BpRestfulService} from '../../shared/async-services/bp-restful.async-service';
+import {AsyncService} from '../async-services/base.async-service';
+import {BpRestfulService} from '../async-services/bp-restful.async-service';
 
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
 import {provideStore} from '@ngrx/store';
-import {API_URL} from '../../shared/config/config';
-import {parentReducer} from '../../shared/reducers/parent.reducer';
-import {ParentModel} from '../../shared/models/parent.model';
+import {API_URL} from '../config/config';
+import {parentReducer} from '../reducers/parent.reducer';
+import {ParentModel} from '../models/parent.model';
 
-import {RestfulGateway} from '../../shared/gateways/restful.gateway';
+import {RestfulGateway} from '../gateways/restful.gateway';
 
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {BP_HTTP} from '../../shared/channels/bp-http.channel';
+import {BP_HTTP} from '../channels/bp-http.channel';
 import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
-import {getToken} from '../../shared/auth/token-store';
+import {getToken} from '../auth/token-store';
 
 const API_SCHEMA = 'http:';
 const API_HOST = 'localhost:3000';
@@ -63,7 +61,15 @@ const providers = [
   providers
 })
 @RouteConfig([
-  { path: '/',      name: 'Home',  component: HomeComponent  },
-  { path: '/about', name: 'About', component: AboutComponent }
+  {
+    path: '/',
+    name: 'Home',
+    loader: () => System.import('./app/+home/components/home.component').then((m: any) => m.HomeComponent)
+  },
+  {
+    path: '/+about',
+    name: 'About',
+    loader: () => System.import('./app/+about/components/about.component').then((m: any) => m.AboutComponent)
+  }
 ])
 export class AppComponent {}

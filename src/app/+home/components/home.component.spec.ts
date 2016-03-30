@@ -33,7 +33,7 @@ export function main() {
 
 @Component({
   selector: 'test-cmp',
-  template: '<sd-home></sd-home>',
+  template: '<sd-+home></sd-+home>',
   directives: [HomeComponent]
 })
 class TestComponent {}

@@ -16,6 +16,8 @@ export class ProjectConfig extends SeedConfig {
     const seedDependencies = this.NPM_DEPENDENCIES;
 
     this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
+    this.ASSETS_SRC = `${this.APP_SRC}/app/assets`;
+    console.log(this.ASSETS_SRC);
 
     this.APP_ASSETS = [
       // {src: `${this.ASSETS_SRC}/css/toastr.min.css`, inject: true},
