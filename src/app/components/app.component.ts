@@ -1,7 +1,7 @@
 import {Component, provide} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
-import {NavbarComponent} from './navbar.component';
-import {ToolbarComponent} from './toolbar.component';
+import {NavbarComponent} from './navbar/navbar.component';
+import {ToolbarComponent} from './toolbar/toolbar.component';
 
 import {AsyncService} from '../async-services/base.async-service';
 import {BpRestfulService} from '../async-services/bp-restful.async-service';
@@ -64,12 +64,12 @@ const providers = [
   {
     path: '/',
     name: 'Home',
-    loader: () => System.import('./app/+home/components/home.component').then((m: any) => m.HomeComponent)
+    loader: () => System.import('./app/+home/index').then((m: any) => m.HomeComponent)
   },
   {
     path: '/+about',
     name: 'About',
-    loader: () => System.import('./app/+about/components/about.component').then((m: any) => m.AboutComponent)
+    loader: () => System.import('./app/+about/index').then((m: any) => m.AboutComponent)
   }
 ])
 export class AppComponent {}

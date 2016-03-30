@@ -4,7 +4,24 @@ import {InjectableDependency} from './seed.config.interfaces';
 
 export class ProjectConfig extends SeedConfig {
   PROJECT_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'project');
-
+  SYSTEM_CONFIG: any = {
+    defaultJSExtensions: true,
+    packageConfigPaths: [
+      `${this.APP_BASE}node_modules/*/package.json`,
+      `${this.APP_BASE}node_modules/@ngrx/store/package.json`
+    ],
+    paths: {
+      'app/*': `${this.APP_BASE}app/*/index`,
+      [this.BOOTSTRAP_MODULE]: `${this.APP_BASE}${this.BOOTSTRAP_MODULE}`,
+      'angular2/*': `${this.APP_BASE}angular2/*`,
+      'rxjs/*': `${this.APP_BASE}rxjs/*`,
+      '*': `${this.APP_BASE}node_modules/*`
+    },
+    packages: {
+      angular2: { defaultExtension: false },
+      rxjs: { defaultExtension: false }
+    }
+  };
   constructor() {
     super();
     // this.APP_TITLE = 'Put name of your app here';
@@ -17,7 +34,6 @@ export class ProjectConfig extends SeedConfig {
 
     this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
     this.ASSETS_SRC = `${this.APP_SRC}/app/assets`;
-    console.log(this.ASSETS_SRC);
 
     this.APP_ASSETS = [
       // {src: `${this.ASSETS_SRC}/css/toastr.min.css`, inject: true},
@@ -25,22 +41,5 @@ export class ProjectConfig extends SeedConfig {
       { src: `${this.ASSETS_SRC}/main.css`, inject: true },
     ];
 
-    this.SYSTEM_CONFIG = {
-      defaultJSExtensions: true,
-      packageConfigPaths: [
-        `${this.APP_BASE}node_modules/*/package.json`,
-        `${this.APP_BASE}node_modules/@ngrx/store/package.json`
-      ],
-      paths: {
-        [this.BOOTSTRAP_MODULE]: `${this.APP_BASE}${this.BOOTSTRAP_MODULE}`,
-        'angular2/*': `${this.APP_BASE}angular2/*`,
-        'rxjs/*': `${this.APP_BASE}rxjs/*`,
-        '*': `${this.APP_BASE}node_modules/*`
-      },
-      packages: {
-        angular2: { defaultExtension: false },
-        rxjs: { defaultExtension: false }
-      }
-    };
   }
 }
