@@ -6,9 +6,8 @@ import {ParentModel} from '../../models/parent.model';
 
 @Component({
   selector: 'sd-home',
-  moduleId: module.id,
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  templateUrl: './app/+home/components/home.component.html',
+  styleUrls: ['./app/+home/components/home.component.css'],
   directives: [FORM_DIRECTIVES, CORE_DIRECTIVES]
 })
 export class HomeComponent {

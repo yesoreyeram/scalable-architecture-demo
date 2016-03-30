@@ -51,8 +51,7 @@ const providers = [
 
 @Component({
   selector: 'sd-app',
-  moduleId: module.id,
-  templateUrl: './app.component.html',
+  templateUrl: './app/components/app.component.html',
   directives: [ROUTER_DIRECTIVES, NavbarComponent, ToolbarComponent],
   providers
 })
@@ -60,12 +59,12 @@ const providers = [
   {
     path: '/',
     name: 'Home',
-    loader: () => System.import('./app/+home/index').then((m: any) => m.HomeComponent)
+    loader: () => System.import('app/+home').then((m: any) => m.HomeComponent)
   },
   {
     path: '/+about',
     name: 'About',
-    loader: () => System.import('./app/+about/index').then((m: any) => m.AboutComponent)
+    loader: () => System.import('app/+about').then((m: any) => m.AboutComponent)
   }
 ])
 export class AppComponent {}
