@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {CommandPayload} from './payloads/base.command-payload';
+import {CommandPayload} from './payloads/base.command.payload';
 import {Gateway} from '../gateways/base.gateway';
 import {Observer} from 'rxjs/Observer';
 

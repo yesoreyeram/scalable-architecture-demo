@@ -1,4 +1,4 @@
-import {JsonPayload} from './json.command-payload';
+import {JsonPayload} from './json.command.payload.ts';
 export function main() {
   describe('JsonPayload Service', () => {
     let jsonPayload: JsonPayload;

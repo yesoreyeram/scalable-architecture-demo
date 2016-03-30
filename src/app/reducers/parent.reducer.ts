@@ -1,4 +1,4 @@
-import {initialState} from '../store/bp-store';
+import {initialState} from '../store/bp.store';
 import {Action} from '@ngrx/store';
 import * as ParentActions from '../actions/index';
 

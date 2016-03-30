@@ -1,6 +1,6 @@
 import {Injectable, Inject} from 'angular2/core';
 import {Store} from '@ngrx/store';
-import {Parent} from '../store/bp-store';
+import {Parent} from '../store/bp.store';
 import {AsyncService} from '../async-services/base.async-service';
 import {Model} from './base.model';
 
@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {ParentActions} from '../actions/index';
 import {AuthConfig} from 'angular2-jwt/angular2-jwt';
-import {persistToken} from '../auth/token-store';
+import {persistToken} from '../auth/token-store.auth';
 
 @Injectable()
 export class ParentModel extends Model {

@@ -1,4 +1,4 @@
-import {CommandPayload} from './base.command-payload';
+import {CommandPayload} from './base.command.payload';
 
 export class JsonPayload extends CommandPayload {
   private _payloads: JsonPayload[] = [];

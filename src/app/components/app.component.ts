@@ -9,7 +9,7 @@ import {BpRestfulService} from '../async-services/bp-restful.async-service';
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
 import {provideStore} from '@ngrx/store';
-import {API_URL} from '../config/config';
+import {API_URL, API_SCHEMA, API_HOST, API_PATH} from '../config/config';
 import {parentReducer} from '../reducers/parent.reducer';
 import {ParentModel} from '../models/parent.model';
 
@@ -18,11 +18,7 @@ import {RestfulGateway} from '../gateways/restful.gateway';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {BP_HTTP} from '../channels/bp-http.channel';
 import {AuthHttp, AuthConfig} from 'angular2-jwt/angular2-jwt';
-import {getToken} from '../auth/token-store';
-
-const API_SCHEMA = 'http:';
-const API_HOST = 'localhost:3000';
-const API_PATH = 'v1';
+import {getToken} from '../auth/token-store.auth';
 
 // const getDefaultToken = () => {
 //   return btoa(JSON.stringify({

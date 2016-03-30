@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {Parent} from '../../store/bp-store';
+import {Parent} from '../../store/bp.store';
 import {ParentModel} from '../../models/parent.model';
 
 @Component({
