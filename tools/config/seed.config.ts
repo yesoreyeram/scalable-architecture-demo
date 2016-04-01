@@ -39,6 +39,7 @@ export class SeedConfig {
   JS_DEST              = `${this.APP_DEST}/js`;
   APP_ROOT             = this.ENV === 'dev' ? `${this.APP_BASE}${this.APP_DEST}/` : `${this.APP_BASE}`;
   VERSION              = appVersion();
+  MANIFEST_FILE        = 'manifest.appcache';
 
   CSS_PROD_BUNDLE      = 'all.css';
   JS_PROD_SHIMS_BUNDLE = 'shims.js';
@@ -132,6 +133,7 @@ export class SeedConfig {
 
   SYSTEM_BUILDER_CONFIG = {
     defaultJSExtensions: true,
+    packageConfigPaths: ['*/package.json'],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
       '*': 'node_modules/*'

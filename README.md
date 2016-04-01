@@ -19,5 +19,9 @@ npm run docs
 npm run build.dev
 # prod build
 npm run build.prod
+
+# generate manifest.appcache
+npm run generate.manifest.prod
+npm run generate.manifest.dev
 ```
 
