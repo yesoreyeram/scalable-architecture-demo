@@ -20,7 +20,7 @@ import {DropDownItemComponent} from './drop-down-item.component';
   template: `
     <div id="master">
       <div id="selected" (click)="expandDropDown()">
-        <span>{{defaultText}}</span>
+        <span>{{_text}}</span>
         <div id="triangle"></div>
       </div>
       <div #itemsContainer id="items"><ng-content></ng-content></div>
@@ -72,12 +72,14 @@ export class DropDownContComponent implements OnInit, AfterViewInit {
   private static EXPAND_CLASS: string = 'expanded';
   private static DEF_TEXT: string = 'Select an item';
 
-  @Input() defaultText: string;
-  @Input() defaultItem: string;
   @Output() change: EventEmitter<DropDownItemComponent> = new EventEmitter();
+  @Input() placeholder: string = '';
 
   @ViewChild('itemsContainer') itemsContainer: ElementRef;
   @ContentChildren(DropDownItemComponent) children: QueryList<DropDownItemComponent>;
+
+  private _text: string;
+  private _value: string;
 
   private _isExpanded: boolean;
   private _buttonFlag: boolean;
@@ -88,17 +90,31 @@ export class DropDownContComponent implements OnInit, AfterViewInit {
     this._renderer.listenGlobal('document', 'click', () => { this.closeOnDocClick(); });
   }
 
-  ngAfterViewInit(): void {
-    if (!this.defaultItem) {
-      this.defaultText = this.defaultText || DropDownContComponent.DEF_TEXT;
-    } else {
-      this.children.forEach((item: DropDownItemComponent) => {
-        if (item.value === this.defaultItem) {
-          this.defaultText = item.text;
-        }
-      });
-    }
+  @Input()
+  get value() {
+    return this._value;
+  }
 
+  set value(value: string) {
+    let result = (this.children || []).reduce((accum: DropDownItemComponent, item: DropDownItemComponent) => {
+      if (item.value === value) {
+        accum = item;
+      }
+      return accum;
+    }, null);
+    if (result) {
+      this._value = result.value;
+      this._text = result.text;
+    } else {
+      this._value = undefined;
+      this._text = this.placeholder;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.value) {
+      this._text = DropDownContComponent.DEF_TEXT;
+    }
     this._cdRef.detectChanges();
   }
 
@@ -117,7 +133,7 @@ export class DropDownContComponent implements OnInit, AfterViewInit {
 
   emitOnChangeEvent(item: DropDownItemComponent): void {
     this.change.emit(item);
-    this.defaultText = item.text;
+    this._text = item.text;
   }
 
   private _setDropDownState(state: boolean): void {

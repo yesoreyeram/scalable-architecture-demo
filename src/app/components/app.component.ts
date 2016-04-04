@@ -22,6 +22,7 @@ import {getToken} from '../auth/token-store.auth';
 import {kidReducer} from '../reducers/kid.reducer';
 import {KidsCollectionModel} from '../models/kids-collection.model';
 import {BP_RESTFUL_COMMAND_BUILDERS, CommandBuilders} from '../async-services/bp-restful-service/command-builders/index';
+import DropDownDirectives from './drop-down/index';
 
 const providers = [
   provide(AsyncService, { useClass: BpRestfulService, multi: true }),
@@ -49,7 +50,7 @@ const providers = [
 @Component({
   selector: 'sd-app',
   templateUrl: './app/components/app.component.html',
-  directives: [ROUTER_DIRECTIVES, NavbarComponent, ToolbarComponent],
+  directives: [ROUTER_DIRECTIVES, NavbarComponent, ToolbarComponent, DropDownDirectives],
   providers
 })
 @RouteConfig([
@@ -64,4 +65,11 @@ const providers = [
     loader: () => System.import('app/+about').then((m: any) => m.AboutComponent)
   }
 ])
-export class AppComponent {}
+export class AppComponent {
+  foo: string;
+  constructor() {
+    setInterval(() => {
+      console.log(this.foo);
+    }, 1000);
+  }
+}
