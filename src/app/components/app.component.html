@@ -1,15 +1,4 @@
 <sd-toolbar></sd-toolbar>
 <sd-navbar></sd-navbar>
 
-<select [(ngModel)]="foo">
-  <option value="Foobar">Foobar</option>
-  <option value="Barfoo">Barfoo</option>
-</select>
-<dd-container [(ngModel)]="foo">
-  <dd-item value="Foobar" text="Foobar"></dd-item>
-  <dd-item value="Barfoo" text="Barfoo"></dd-item>
-</dd-container>
-
-<input type="text" #ddValue><button (click)="foo=ddValue.value">Click me</button>
-
 <router-outlet></router-outlet>

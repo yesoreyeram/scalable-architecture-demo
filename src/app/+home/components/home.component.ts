@@ -1,53 +1,38 @@
 import {Component} from 'angular2/core';
-import {Observable} from 'rxjs/Observable';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {Parent, Kid} from '../../store/bp.store';
-import {ParentModel} from '../../models/parent.model';
-import {KidsCollectionModel} from '../../models/kids-collection.model';
+import {FORM_DIRECTIVES, FORM_PROVIDERS} from 'angular2/common';
+import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
+import {GameModel} from '../../models/game.model';
+
+import 'rxjs/add/operator/scan';
 
 @Component({
-  selector: 'sd-home',
-  templateUrl: './app/+home/components/home.component.html',
-  styleUrls: ['./app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES, CORE_DIRECTIVES]
+  selector: 'home',
+  template: `
+  <h1>Hello there!</h1>
+  
+  You can either play <a [routerLink]="['SinglePlayer']">single player</a> or
+  <a [routerLink]="['MultiPlayer']">multi-player</a> game!<br><br>
+  
+  Enter a game name here: <input type="text" [(ngModel)]="gameId"><button (click)="startGame()">Go</button>
+  
+  <div *ngIf="hasGames() | async">
+    <h2>Your statistics:</h2>
+    <ul *ngFor="var game of _game.games$ | async">
+      <li>{{game.get('text')}} - {{game.get('time')}}</li>
+    </ul>
+  </div>
+    
+  `,
+  providers: [FORM_PROVIDERS, ROUTER_PROVIDERS],
+  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 export class HomeComponent {
-  parent$: Observable<Parent>;
-  private email: string = 'minko@gechev.com';
-  private name: string;
-  private password: string = 'test';
-
-  private kidName: string;
-  private kidGender: number;
-  private kidGrade: number;
-
-  constructor(private parent: ParentModel, private kids: KidsCollectionModel) {}
-
-  getToken() {
-    this.parent.getGuestToken();
+  private gameId: string;
+  constructor(private _game: GameModel, private _router: Router) {}
+  startGame() {
+    this._router.navigate(['MultiPlayer', { id: this.gameId }]);
   }
-
-  signIn() {
-    this.parent.signIn(this.email, this.password);
-    // this.email = '';
-    // this.password = '';
-  }
-
-  signUp() {
-    this.parent.signUp(this.name, this.email, this.password);
-    // this.email = '';
-    // this.password = '';
-  }
-
-  loadKids() {
-    this.kids.loadKids();
-  }
-  createKid() {
-    let kid = new Kid();
-    kid.gender = this.kidGender;
-    kid.grade = this.kidGrade;
-    kid.name = this.kidName;
-    this.kids.createKid(kid);
-    this.kidName = '';
+  hasGames() {
+    return this._game.games$.scan((accum: boolean, game: any) => (accum || !!game.size), false);
   }
 }

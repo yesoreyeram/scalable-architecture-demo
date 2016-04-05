@@ -13,9 +13,9 @@ export interface FailCallback {
 }
 
 export abstract class Model {
-  protected services: AsyncService[];
+  protected _services: AsyncService[];
   protected performAsyncAction(action: Action) {
     console.log('Async started');
-    return Observable.merge.apply(Observable, this.services.map(s => s.process(action)));
+    return Observable.merge.apply(Observable, this._services.map(s => s.process(action)));
   }
 }
