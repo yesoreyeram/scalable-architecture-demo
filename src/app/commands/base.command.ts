@@ -61,7 +61,7 @@ export abstract class Command {
     context = context || this;
     context.state = CommandState.EXECUTING;
     let result = new Observable<CommandResult>((observer: Observer<CommandResult>) => {
-      this._gateway.send(context).subscribe(response => {
+      this._gateway.send(context).subscribe((response: Observer<any>) => {
         context.state = CommandState.INVOKED;
         observer.next({
           command: context,

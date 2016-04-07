@@ -17,8 +17,9 @@ export class TimerComponent {
     this.timer = new Observable<number>((observer: Observer<number>) => {
       observer.next(this.time);
       this.interval = setInterval(() => {
-        observer.next(++this.time);
-      }, 1000);
+        this.time += 10;
+        observer.next(this.time);
+      }, 10);
     });
   }
 }

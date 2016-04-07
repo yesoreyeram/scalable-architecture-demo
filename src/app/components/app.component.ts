@@ -1,5 +1,5 @@
 import {Component, provide} from 'angular2/core';
-import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
+import {ROUTER_DIRECTIVES, RouteConfig, Router} from 'angular2/router';
 import {NavbarComponent} from './navbar/navbar.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 
@@ -10,7 +10,8 @@ import {provideStore} from '@ngrx/store';
 import {gamesReducer} from '../reducers/game.reducer';
 import {GameModel} from '../models/game.model';
 import {AsyncService} from '../async-services/base.async-service';
-
+import '../gateways/webrtc.gateway';
+import {RoomConfig} from '../gateways/webrtc.gateway';
 
 const providers = [
   ROUTER_PROVIDERS,
@@ -18,7 +19,8 @@ const providers = [
   provide(APP_BASE_HREF, { useValue: '/' }),
   provideStore({ games: gamesReducer }),
   GameModel,
-  AsyncService
+  AsyncService,
+  RoomConfig
 ];
 
 @Component({
@@ -44,4 +46,11 @@ const providers = [
     loader: () => System.import('app/+multi-player').then((m: any) => m.MultiPlayerComponent)
   }
 ])
-export class AppComponent {}
+export class AppComponent {
+  constructor(private _router: Router) {
+
+  }
+  navigateTo(page: string) {
+    this._router.navigate([page]);
+  }
+}

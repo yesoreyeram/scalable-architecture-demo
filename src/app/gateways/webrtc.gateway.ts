@@ -1,74 +1,116 @@
-import {RestfulCommand} from '../commands/restful.command';
+import * as Peer from 'simple-peer';
 import {Gateway} from './base.gateway';
-import {Inject, Injectable} from 'angular2/core';
-import {Http, RequestMethod, Response, RequestOptionsArgs, Headers} from 'angular2/http';
-import {API_URL} from '../config/config';
+import {WebSocketGateway} from './websocket.gateway';
 import {Observable} from 'rxjs/Observable';
+import {Command} from '../commands/base.command';
+import {JsonPayload} from '../commands/payloads/json.command.payload';
+import {Injectable} from 'angular2/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/merge';
-import {BP_HTTP} from '../channels/bp-http.channel';
-import {Observer} from 'rxjs/Observer';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+
+export class RoomConfig {
+  isInitiator: boolean;
+  name: string;
+}
+
+class SignalingCommand extends Command {}
 
 @Injectable()
-export class RestfulGateway extends Gateway {
-  constructor(@Inject(BP_HTTP) private http: Http, @Inject(API_URL) private API_URL: string) {
+export class WebRTCGateway extends Gateway {
+  public connectionEvents: Observable<boolean>;
+  private _peer: any;
+  private _partner: any;
+  private _name: any;
+  private _connected: boolean = false;
+  constructor(private _provider: RoomConfig, private _ws: WebSocketGateway) {
     super();
-  }
-  get(command: RestfulCommand): Observable<Response> {
-    return this.http.get(this.getUrl(command));
-  }
-  post(command: RestfulCommand): Observable<Response> {
-    let options: RequestOptionsArgs = {
-      headers: new Headers({
-        'Content-Type': command.mimeType
-      })
-    };
-    return this.http.post(this.getUrl(command), command.serialize().toString(), options);
-  }
-  put(command: RestfulCommand): Observable<Response> {
-    return this.http.put(this.getUrl(command), command.serialize().toString());
-  }
-  delete(command: RestfulCommand): Observable<Response> {
-    return this.http.delete(this.getUrl(command));
-  }
-  send(command: RestfulCommand): Observable<string> {
-    let result: Observable<Response>;
-    switch (command.method) {
-      case RequestMethod.Get:
-        result = this.get(command);
-      break;
-      case RequestMethod.Post:
-        result = this.post(command);
-      break;
-      case RequestMethod.Put:
-        result = this.put(command);
-      break;
-      case RequestMethod.Delete:
-        result = this.delete(command);
-      break;
+    if (this._provider.isInitiator) {
+      this._name = this._provider.name;
+    } else {
+      this._name = `${Math.round(Math.random() * 100)}.${Date.now()}`;
+      this._partner = this._provider.name;
     }
-    if (result) {
-      return new Observable<string>((observer: Observer<string>) => {
-        result.catch((response: Response) => {
-            return Observable.create((observer: any) => {
-              observer.next(response);
-            });
-          })
-          .forEach((response: Response) => {
-            const text = response.text();
-            const code = response.status;
-            if (code >= 200 && code <= 299) {
-              observer.next(text);
-            } else {
-              observer.error(text);
-            }
-          }, this);
+    const jsonStream = this._ws.dataStream
+      .map((data:any) => JSON.parse(data));
+    if (this._provider.isInitiator) {
+      jsonStream.filter((data: any) => {
+        return data.type === 'start' && data.target === this._name;
+      })
+      .subscribe((data: any) => {
+        console.log('Handling', data);
+        this._partner = data.source;
+        this._addHandlers();
+      });
+    } else {
+      jsonStream.filter((data: any) => {
+        return data.type === 'init' && data.target === this._name;
+      })
+      .subscribe((data: any) => {
+        console.log('Offering connection', data);
+        this._addHandlers();
+        this._signal({
+          type: 'start',
+          source: this._name,
+          target: this._partner
+        });
       });
     }
-    throw new Error('The requested REST method is not supported');
+    jsonStream.filter((data: any) => {
+      return data.type ==='signal';
+    }).subscribe((data: any) => {
+      this._peer.signal(data.data);
+    });
+    this._ws.connectionEvents.filter((e: boolean) => e)
+      .subscribe(() => {
+        this._signal({
+          type: 'init',
+          source: this._name,
+          target: this._partner
+        });
+      });
   }
-  private getUrl(command: RestfulCommand): string {
-    return `${this.API_URL}${command.resource}`;
+  send(command: Command) {
+    // Send if connected & drop all others
+    // TODO: buffer the input
+    if (!this._connected) {
+      this._peer.send(command.serialize());
+    }
+  }
+  private _addHandlers() {
+    this._peer = new Peer({ initiator: this._provider.isInitiator });
+    this._peer.on('signal', (data: any) => {
+      this._signal({
+        type: 'signal',
+        target: this._partner,
+        source: this._name,
+        data
+      });
+    });
+
+    this._peer.on('connect', () => {
+      console.log('CONNECT');
+      this._connectionEventsEmitter.next(true);
+      this._connected = true;
+    });
+
+    this._peer.on('data', (data: any) => {
+      console.log('got a message from peer: ' + data);
+      this._emitter.next(data);
+    });
+
+    // Reconnect somehow...
+    this._peer.on('error', (err: any) => {
+      console.log('error', err);
+      this._connectionEventsEmitter.next(false);
+    });
+  }
+
+  private _signal(data: any) {
+    let command = new SignalingCommand();
+    command.payload = new JsonPayload();
+    command.payload.setData(data);
+    this._ws.send(command);
   }
 }

@@ -16,6 +16,7 @@ let runServer = () => {
   browserSync.init({
     middleware: [require('connect-history-api-fallback')({index: `${APP_BASE}index.html`})],
     port: PORT,
+    ghostMode: false,
     startPath: APP_BASE,
     server: {
       baseDir: baseDir,
