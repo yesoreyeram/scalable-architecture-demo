@@ -9,6 +9,7 @@ import {Injectable} from 'angular2/core';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import {Observer} from 'rxjs/Observer';
 
 export class RoomConfig {
   isInitiator: boolean;
@@ -76,10 +77,10 @@ export class WebRTCGateway extends Gateway {
   send(command: Command) {
     // Send if connected & drop all others
     // TODO: buffer the input
-    if (!this._connected) {
+    if (this._connected) {
       this._peer.send(command.serialize());
     }
-    return Observable.create();
+    return Observable.create((observer: Observer<any>) => observer.complete());
   }
   private _addHandlers() {
     this._peer = new Peer({ initiator: this._provider.isInitiator });

@@ -61,7 +61,7 @@ export class GameComponent implements AfterViewInit {
       this._model.completeGame(this.timer.time, this.text);
       this.timer.reset();
     } else {
-      this._model.onProgress(this.text);
+      this._model.onProgress(data);
       if (this.text.indexOf(data) !== 0) {
         this._renderer.setElementClass(this.gameContainer.nativeElement, 'wrong', true);
       } else {

@@ -1,15 +1,23 @@
-<p>
-  Angular 2 Seed is a starter project that implements best practices in
-  coding, building and testing Angular 2 apps.
-<p>
+<div *ngIf="gameEnabled">
+  <game [text]="text" (end)="gameCompleted($event)"></game>
+</div>
+<div *ngIf="!gameEnabled">
+  <h1>Howdy!</h1>
+  <section>
+    Type the text on top of the textarea as fast as possible!
+    <br><br>
+    <section *ngIf="playerJoined">
+      Starting in...{{timeLeft}} sec.
+    </section>
+    <section *ngIf="!playerJoined">
+      Waiting for another player...
+    </section>
+  </section>
+</div>
 
-<h2>Features</h2>
-<ul>
-  <li>Ready to go, statically typed build system using Gulp for working with TypeScript.</li>
-  <li>Production and development builds.</li>
-  <li>Sample unit tests with Jasmine and Karma including code coverage via Istanbul.</li>
-  <li>End-to-end tests with Protractor.</li>
-  <li>Development server with live reload.</li>
-  <li>TypeScript definition management using Typings.</li>
-  <li>Basic Service Worker, which implements "Cache then network strategy".</li>
-</ul>
+<div>
+  <h2>Partner progress...</h2>
+  <div style="border: 1px solid black;">
+    {{ partnerText() | async }}
+  </div>
+</div>

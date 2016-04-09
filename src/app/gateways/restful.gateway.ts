@@ -15,20 +15,14 @@ export class RestfulGateway extends Gateway {
   }
   send(command: RestfulCommand): Observable<any> {
     return Observable.create((observer: Observer<any>) => {
-      const ok = Math.random() <= 0.9;
-      const body = null;
-      const status = ok ? 200 : 500;
-      const headers = null;
-      const statusText = null;
-      const type = null;
-      const url = null
+      const ok = Math.random() <= 0.95;
       const response = new Response(new ResponseOptions({
-        body,
-        status,
-        headers,
-        statusText,
-        type,
-        url
+        body: null,
+        status: ok ? 200 : 500,
+        headers: null,
+        statusText: null,
+        type: null,
+        url: null
       }));
       return ok ? observer.next(response) : observer.error(response);
     });

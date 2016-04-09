@@ -2,6 +2,9 @@ import {CommandPayload} from './base.command.payload';
 
 export class JsonPayload extends CommandPayload {
   private _payloads: JsonPayload[] = [];
+  constructor(payload?: any) {
+    super(payload || {});
+  }
   concat(payload: JsonPayload): this {
     this._payloads.push(payload);
     return this;

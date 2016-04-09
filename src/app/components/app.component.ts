@@ -7,7 +7,7 @@ import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {provideStore} from '@ngrx/store';
-import {gamesReducer, gameReducer} from '../reducers/game.reducer';
+import {gamesReducer, gameReducer, p2pGameReducer} from '../reducers/game.reducer';
 import '../gateways/webrtc.gateway';
 import {RoomConfig} from '../gateways/webrtc.gateway';
 import {RestfulGateway} from '../gateways/restful.gateway';
@@ -17,7 +17,7 @@ const providers = [
   ROUTER_PROVIDERS,
   HTTP_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '/' }),
-  provideStore({ games: gamesReducer, game: gameReducer }),
+  provideStore({ games: gamesReducer, game: gameReducer, p2pGame: p2pGameReducer }),
   GameModel,
   RestfulGateway,
   RoomConfig

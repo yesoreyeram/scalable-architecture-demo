@@ -1,5 +1,5 @@
-import {RestfulGateway} from '../gateways/restful.gateway';
-import {AsyncService} from './base.async-service';
+import {RestfulGateway} from '../../gateways/restful.gateway';
+import {AsyncService} from './../base.async-service';
 
 import {Action} from '@ngrx/store';
 import {Injectable} from 'angular2/core';

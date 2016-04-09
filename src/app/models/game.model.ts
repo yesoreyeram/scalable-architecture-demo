@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 export class GameModel extends Model {
   games$: Observable<string>;
   game$: Observable<string>;
+  private _prevText: string = '';
   constructor(protected _store: Store<any>,
               @Optional() @Inject(AsyncService) _services: AsyncService[]) {
     super(_services || []);
@@ -20,12 +21,13 @@ export class GameModel extends Model {
     this._store.dispatch(GameActions.startGame());
   }
   onProgress(text: string) {
-    this.performAsyncAction(GameActions.gameProgress(text, new Date()))
+    this.performAsyncAction(GameActions.gameProgress(this._prevText, text, new Date()))
       .subscribe(() => {
         // Do nothing, we're all good
       }, () => {
         this._store.dispatch(GameActions.invalidateGame());
       });
+    this._prevText = text;
   }
   completeGame(time: number, text: string) {
     this._store.dispatch(GameActions.completeGame(time, text));

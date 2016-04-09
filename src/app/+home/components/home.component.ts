@@ -6,6 +6,8 @@ import {GameModel} from '../../models/game.model';
 import 'rxjs/add/operator/scan';
 import {AppComponent} from '../../components/app.component';
 import {RoomConfig} from '../../gateways/webrtc.gateway';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'home',
@@ -33,7 +35,7 @@ import {RoomConfig} from '../../gateways/webrtc.gateway';
       <li>{{game.get('text')}} - {{game.get('time')}}</li>
     </ul>
   </div>
-    
+  
   `,
   providers: [FORM_PROVIDERS, ROUTER_PROVIDERS],
   directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES]

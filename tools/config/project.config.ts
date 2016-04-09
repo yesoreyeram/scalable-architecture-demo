@@ -16,6 +16,7 @@ export class ProjectConfig extends SeedConfig {
       'angular2/*': `${this.APP_BASE}angular2/*`,
       'rxjs/*': `${this.APP_BASE}rxjs/*`,
       'simple-peer': `${this.APP_BASE}node_modules/simple-peer/simplepeer.min`,
+      'diff': `${this.APP_BASE}node_modules/diff/dist/diff`,
       '*': `${this.APP_BASE}node_modules/*`
     },
     packages: {
