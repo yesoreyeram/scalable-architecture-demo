@@ -32,8 +32,10 @@ export class WebRTCGateway extends Gateway {
       this._name = `${Math.round(Math.random() * 100)}.${Date.now()}`;
       this._partner = this._provider.name;
     }
+
     const jsonStream = this._ws.dataStream
       .map((data:any) => JSON.parse(data));
+
     if (this._provider.isInitiator) {
       jsonStream.filter((data: any) => {
         return data.type === 'start' && data.target === this._name;
