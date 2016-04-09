@@ -10,11 +10,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import {Observer} from 'rxjs/Observer';
-
-export class RoomConfig {
-  isInitiator: boolean;
-  name: string;
-}
+import {RoomConfig} from '../../config/config';
 
 class SignalingCommand extends Command {}
 

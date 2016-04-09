@@ -10,13 +10,14 @@ import {provideStore} from '@ngrx/store';
 import {gamesReducer, gameReducer, p2pGameReducer} from '../reducers/game.reducer';
 import {RestfulGateway} from '../gateways/restful.gateway';
 import {GameModel} from '../models/game.model';
+import {RoomConfig} from '../config/config';
 
 const providers = [
   ROUTER_PROVIDERS,
   HTTP_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '/' }),
   provideStore({ games: gamesReducer, game: gameReducer, p2pGame: p2pGameReducer }),
-  GameModel,
+  GameModel, RoomConfig,
   RestfulGateway
 ];
 
@@ -44,9 +45,7 @@ const providers = [
   }
 ])
 export class AppComponent {
-  constructor(private _router: Router) {
-
-  }
+  constructor(private _router: Router) {}
   navigateTo(page: string) {
     this._router.navigate([page]);
   }

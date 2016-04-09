@@ -8,9 +8,9 @@ import {PROGRESS} from './command-builders/game-p2p.commands';
 import {Store} from '@ngrx/store';
 import {WebRTCGateway} from '../../gateways/webrtc.gateway';
 import {AsyncService} from '../../../async-services/base.async-service';
-import {GameActions} from '../../../actions/action-creators/game.action-creator';
-import {RPCCommand} from '../../../commands/rpc.command';
+import {RPCCommand} from '../../commands/rpc.command';
 import {JsonPayload} from '../../../commands/payloads/json.command.payload';
+import {P2PGameActions} from '../../actions/action-creators/p2p-game.action-creators';
 
 @Injectable()
 export class GameP2PService extends AsyncService {
@@ -21,7 +21,7 @@ export class GameP2PService extends AsyncService {
       .subscribe((command: any) => {
         switch (command.method) {
           case PROGRESS:
-            _store.dispatch(GameActions.partnerProgress(command.payload.text));
+            _store.dispatch(P2PGameActions.partnerProgress(command.payload.text));
             break;
         }
       });

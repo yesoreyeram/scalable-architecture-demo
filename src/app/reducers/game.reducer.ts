@@ -1,7 +1,8 @@
 import {initialState} from '../store/game.store';
 import {Action} from '@ngrx/store';
-import {COMPLETE_GAME, INVALID_GAME, START_GAME, PARTNER_PROGRESS, GAME_PROGRESS} from '../actions/game.actions';
+import {COMPLETE_GAME, INVALID_GAME, START_GAME, GAME_PROGRESS} from '../actions/game.actions';
 import {fromJS} from 'immutable';
+import {PARTNER_PROGRESS} from '../+multi-player/actions/p2p-game.actions';
 
 export const gamesReducer = (state: any = initialState.get('games'), action: Action) => {
   switch (action.type) {
@@ -27,6 +28,7 @@ export const gameReducer = (state: any = initialState.get('game'), action: Actio
   return state;
 };
 
+// Can't move to +multi-player yet because of `provideStore`.
 export const p2pGameReducer = (state: any = initialState.get('p2pGame'), action: Action) => {
   switch (action.type) {
     case START_GAME:

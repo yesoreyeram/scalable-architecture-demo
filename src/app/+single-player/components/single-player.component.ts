@@ -1,11 +1,10 @@
-/* tslint:disable:no-unused-variable */
-
 import {Component, ViewChild, provide} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {GameComponent} from '../../components/game/game.component';
 import {GameModel} from '../../models/game.model';
 import {AsyncService} from '../../async-services/base.async-service';
-import {GameServer} from '../../async-services/single-player/game-server.async-service';
+import {GameServer} from '../../async-services/game-server/game-server.async-service';
+import {GAME_TEXT} from '../../config/config';
 
 @Component({
   selector: 'sd-home',
@@ -18,7 +17,7 @@ import {GameServer} from '../../async-services/single-player/game-server.async-s
   ]
 })
 export class SinglePlayerComponent {
-  private text = `Lorem Ipsum is simply dummy text of the printing.`;
+  private text = GAME_TEXT;
   private gameEnabled: boolean = false;
   private time: number;
   private gamePlayed: boolean = false;

@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Model} from './base.model';
+import {Model} from './../../models/base.model';
 
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';

@@ -1,23 +1,22 @@
-<div *ngIf="gameEnabled">
+<div [hidden]="!gameEnabled">
   <game [text]="text" (end)="gameCompleted($event)"></game>
+  <div>
+    <h2>Partner progress...</h2>
+    <div style="border: 1px solid black;">
+      {{ partnerText() | async }}
+    </div>
+  </div>
 </div>
-<div *ngIf="!gameEnabled">
+<div [hidden]="gameEnabled">
   <h1>Howdy!</h1>
   <section>
     Type the text on top of the textarea as fast as possible!
     <br><br>
-    <section *ngIf="playerJoined">
+    <section [hidden]="!playerJoined">
       Starting in...{{timeLeft}} sec.
     </section>
-    <section *ngIf="!playerJoined">
+    <section [hidden]="playerJoined">
       Waiting for another player...
     </section>
   </section>
-</div>
-
-<div>
-  <h2>Partner progress...</h2>
-  <div style="border: 1px solid black;">
-    {{ partnerText() | async }}
-  </div>
 </div>

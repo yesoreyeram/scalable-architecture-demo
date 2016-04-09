@@ -11,11 +11,11 @@ import 'rxjs/add/operator/scan';
 @Component({
   selector: 'game',
   template: `
-    <section *ngIf="invalid() | async">
+    <section [hidden]="!(invalid() | async)">
       <h1>Your game is invalid!</h1>
       <img src="./app/assets/cheater.gif">
     </section>
-    <section *ngIf="!(invalid() | async)">
+    <section [hidden]="(invalid() | async)">
       <timer #timer></timer>
       <div class="game" #gameContainer>
         <div class="game-text">{{text}}</div>

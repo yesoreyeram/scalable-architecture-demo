@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {gameProgress} from './game-p2p.command-builder';
-import {RPCCommand} from '../../../../commands/rpc.command';
+import {RPCCommand} from '../../../commands/rpc.command';
 import {GAME_PROGRESS} from '../../../../actions/game.actions';
 
 const builders = new Map<string, CommandBuilder>();
