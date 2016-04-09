@@ -4,6 +4,8 @@ import {AsyncService} from './../base.async-service';
 import {Action} from '@ngrx/store';
 import {Injectable} from 'angular2/core';
 
+// For command builder take a look at
+// +multi-player async-services
 @Injectable()
 export class GameServer extends AsyncService {
   constructor(private _restfulGateway: RestfulGateway) {
