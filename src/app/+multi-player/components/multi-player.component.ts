@@ -1,13 +1,15 @@
 import {Component, provide, ViewChild, NgZone} from 'angular2/core';
 import {Gateway} from '../../gateways/base.gateway';
-import {WebRTCGateway} from '../../gateways/webrtc.gateway';
-import {WebSocketGateway, WebSocketGatewayConfig, WS_CONFIG} from '../../gateways/websocket.gateway';
+import {WebRTCGateway} from '../gateways/webrtc.gateway';
+import {WebSocketGateway, WebSocketGatewayConfig, WS_CONFIG} from '../gateways/websocket.gateway';
 import {WS_PORT, WS_SECURE, WS_HOST} from '../../config/config';
 import {GameComponent} from '../../components/game/game.component';
 import {AsyncService} from '../../async-services/base.async-service';
 import {GameModel} from '../../models/game.model';
 import {GameServer} from '../../async-services/single-player/game-server.async-service';
-import {GameP2PService} from '../../async-services/bp-restful-service/game-p2p.async-service';
+import {GameP2PService} from '../services/bp-restful-service/game-p2p.async-service';
+import {RoomConfig} from '../gateways/webrtc.gateway';
+
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/interval';
@@ -27,7 +29,8 @@ const providers = [
   WebSocketGateway,
   provide(AsyncService, { multi: true, useClass: GameServer }),
   provide(AsyncService, { multi: true, useClass: GameP2PService }),
-  GameModel, P2PGameModel
+  GameModel, P2PGameModel,
+  RoomConfig
 ];
 
 @Component({

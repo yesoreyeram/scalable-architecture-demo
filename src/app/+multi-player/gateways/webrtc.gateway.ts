@@ -1,9 +1,9 @@
 import * as Peer from 'simple-peer';
-import {Gateway} from './base.gateway';
+import {Gateway} from './../../gateways/base.gateway';
 import {WebSocketGateway} from './websocket.gateway';
 import {Observable} from 'rxjs/Observable';
-import {Command} from '../commands/base.command';
-import {JsonPayload} from '../commands/payloads/json.command.payload';
+import {Command} from '../../commands/base.command';
+import {JsonPayload} from '../../commands/payloads/json.command.payload';
 import {Injectable} from 'angular2/core';
 
 import 'rxjs/add/operator/filter';

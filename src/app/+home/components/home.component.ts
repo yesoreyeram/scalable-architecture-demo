@@ -5,7 +5,7 @@ import {GameModel} from '../../models/game.model';
 
 import 'rxjs/add/operator/scan';
 import {AppComponent} from '../../components/app.component';
-import {RoomConfig} from '../../gateways/webrtc.gateway';
+import {RoomConfig} from '../../+multi-player/gateways/webrtc.gateway';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/take';
 

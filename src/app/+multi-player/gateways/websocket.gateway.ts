@@ -1,6 +1,6 @@
-import {Gateway} from './base.gateway';
+import {Gateway} from './../../gateways/base.gateway';
 import {Injectable, Inject, OpaqueToken} from 'angular2/core';
-import {Command} from '../commands/base.command';
+import {Command} from '../../commands/base.command';
 import {Observable} from 'rxjs/Observable';
 
 export interface WebSocketGatewayConfig {

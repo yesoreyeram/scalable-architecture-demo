@@ -1,21 +1,20 @@
-import {AsyncService} from './../base.async-service';
-
 import {Action} from '@ngrx/store';
 import {Injectable} from 'angular2/core';
-import {WebRTCGateway} from '../../gateways/webrtc.gateway';
 import {buildP2PCommand} from './command-builders/index';
-import {RPCCommand} from '../../commands/rpc.command';
-import {JsonPayload} from '../../commands/payloads/json.command.payload';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {PROGRESS} from './command-builders/game-p2p.commands';
 
 import {Store} from '@ngrx/store';
-import {GameActions} from '../../actions/action-creators/game.action-creator';
+import {WebRTCGateway} from '../../gateways/webrtc.gateway';
+import {AsyncService} from '../../../async-services/base.async-service';
+import {GameActions} from '../../../actions/action-creators/game.action-creator';
+import {RPCCommand} from '../../../commands/rpc.command';
+import {JsonPayload} from '../../../commands/payloads/json.command.payload';
 
 @Injectable()
 export class GameP2PService extends AsyncService {
-  constructor(private _rtcGateway: WebRTCGateway, private _store: Store) {
+  constructor(private _rtcGateway: WebRTCGateway, private _store: Store<any>) {
     super();
     _rtcGateway.dataStream
       .map((data: any) => JSON.parse(data.toString()))
