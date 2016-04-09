@@ -15,7 +15,7 @@ export class RestfulGateway extends Gateway {
   }
   send(command: RestfulCommand): Observable<any> {
     return Observable.create((observer: Observer<any>) => {
-      const ok = Math.random() <= 0.95;
+      const ok = Math.random() <= 0.99;
       const response = new Response(new ResponseOptions({
         body: null,
         status: ok ? 200 : 500,

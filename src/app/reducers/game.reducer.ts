@@ -2,7 +2,7 @@ import {initialState} from '../store/game.store';
 import {Action} from '@ngrx/store';
 import {COMPLETE_GAME, INVALID_GAME, START_GAME, GAME_PROGRESS} from '../actions/game.actions';
 import {fromJS} from 'immutable';
-import {PARTNER_PROGRESS} from '../+multi-player/actions/p2p-game.actions';
+import {PARTNER_PROGRESS, PARTNER_COMPLETED} from '../+multi-player/actions/p2p-game.actions';
 
 export const gamesReducer = (state: any = initialState.get('games'), action: Action) => {
   switch (action.type) {
@@ -36,6 +36,9 @@ export const p2pGameReducer = (state: any = initialState.get('p2pGame'), action:
     break;
     case PARTNER_PROGRESS:
       state = state.set('partnerProgress', action.payload.text);
+    break;
+    case PARTNER_COMPLETED:
+      state = state.set('partnerCompleted', true);
     break;
   }
   return state;

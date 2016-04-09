@@ -1,7 +1,7 @@
 import {Action} from '@ngrx/store';
-import {gameProgress} from './game-p2p.command-builder';
+import {gameProgress, gameComplete} from './game-p2p.command-builder';
 import {RPCCommand} from '../../../commands/rpc.command';
-import {GAME_PROGRESS} from '../../../../actions/game.actions';
+import {GAME_PROGRESS, COMPLETE_GAME} from '../../../../actions/game.actions';
 
 const builders = new Map<string, CommandBuilder>();
 
@@ -22,3 +22,4 @@ export const buildP2PCommand = (action: Action) => {
 };
 
 registerCommandBuilder(GAME_PROGRESS, gameProgress);
+registerCommandBuilder(COMPLETE_GAME, gameComplete);

@@ -1,3 +1,5 @@
+/* tslint:disable:no-unused-variable */
+
 import {Component, ViewChild, provide} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {GameComponent} from '../../components/game/game.component';
@@ -21,6 +23,7 @@ export class SinglePlayerComponent {
   private gameEnabled: boolean = false;
   private time: number;
   private gamePlayed: boolean = false;
+
   @ViewChild(GameComponent) private game: GameComponent;
 
   gameCompleted(time: number) {

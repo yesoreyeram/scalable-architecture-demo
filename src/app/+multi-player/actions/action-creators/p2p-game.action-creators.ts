@@ -1,4 +1,4 @@
-import {PARTNER_PROGRESS} from '../p2p-game.actions';
+import {PARTNER_PROGRESS, PARTNER_COMPLETED} from '../p2p-game.actions';
 import {Action} from '@ngrx/store';
 
 export const P2PGameActions = {
@@ -6,6 +6,12 @@ export const P2PGameActions = {
     return {
       payload: {text},
       type: PARTNER_PROGRESS
+    };
+  },
+  partnerCompleted(): Action {
+    return {
+      payload: null,
+      type: PARTNER_COMPLETED
     };
   }
 };

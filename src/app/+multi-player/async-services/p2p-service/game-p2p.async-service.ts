@@ -3,7 +3,7 @@ import {Injectable} from 'angular2/core';
 import {buildP2PCommand} from './command-builders/index';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {PROGRESS} from './command-builders/game-p2p.commands';
+import {PROGRESS, COMPLETE} from './command-builders/game-p2p.commands';
 
 import {Store} from '@ngrx/store';
 import {WebRTCGateway} from '../../gateways/webrtc.gateway';
@@ -22,6 +22,9 @@ export class GameP2PService extends AsyncService {
         switch (command.method) {
           case PROGRESS:
             _store.dispatch(P2PGameActions.partnerProgress(command.payload.text));
+            break;
+          case COMPLETE:
+            _store.dispatch(P2PGameActions.partnerCompleted());
             break;
         }
       });

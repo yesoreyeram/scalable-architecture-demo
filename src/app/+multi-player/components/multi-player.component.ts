@@ -39,8 +39,9 @@ const providers = [
   providers
 })
 export class MultiPlayerComponent {
-  public timeLeft: number = 5;
+  public timeLeft: number = 3;
   public playerJoined: boolean = false;
+  public won: boolean = false;
   private _timer: any;
   constructor(private _gateway: WebRTCGateway, private _zone: NgZone, private _p2pModel: P2PGameModel) {
     this._gateway.connectionEvents.filter((e: boolean) => e)
@@ -51,28 +52,36 @@ export class MultiPlayerComponent {
   }
   private text = GAME_TEXT;
   private gameEnabled: boolean = false;
-  private time: number;
   private gamePlayed: boolean = false;
   @ViewChild(GameComponent) private game: GameComponent;
 
   gameCompleted(time: number) {
-    this.time = time;
-    this.gameEnabled = false;
     this.game.reset();
+    this.won = true;
+    this._p2pModel.completeGame(time, this.text);
   }
 
   partnerText() {
-    return this._p2pModel.p2pGame$
-      .filter((game: any) => game && typeof game.get === 'function')
+    return this._gameModel()
       .map((game: any) => game.get('partnerProgress'));
+  }
+
+  partnerCompleted() {
+    return this._gameModel()
+      .map((game: any) => !!game.get('partnerCompleted'));
+  }
+
+  _gameModel() {
+    return this._p2pModel.p2pGame$
+      .filter((game: any) => game && typeof game.get === 'function');
   }
 
   private _start() {
     this._zone.run(() => {
       this._timer = Observable
         .interval(1000)
-        .take(6)
-        .map((num: number) => 5 - num)
+        .take(4)
+        .map((num: number) => 3 - num)
         .subscribe((time: number) => {
           this.timeLeft = time;
         }, null, () => {
@@ -81,6 +90,5 @@ export class MultiPlayerComponent {
         });
     });
     this.gamePlayed = true;
-    this.time = 0;
   }
 }
