@@ -14,6 +14,7 @@ import {RoomConfig} from '../../config/config';
 
 class SignalingCommand extends Command {}
 
+// TODO implement disconnect functionality
 @Injectable()
 export class WebRTCGateway extends Gateway {
   public connectionEvents: Observable<boolean>;

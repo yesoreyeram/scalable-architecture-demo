@@ -1,3 +1,5 @@
+/* tslint:disable:no-unused-variable */
+
 import {Component, provide, ViewChild, NgZone} from 'angular2/core';
 import {Gateway} from '../../gateways/base.gateway';
 import {WebRTCGateway} from '../gateways/webrtc.gateway';
@@ -58,7 +60,7 @@ export class MultiPlayerComponent {
   gameCompleted(time: number) {
     this.game.reset();
     this.won = true;
-    this._p2pModel.completeGame(time, this.text);
+    // this._p2pModel.completeGame(time, this.text);
   }
 
   partnerText() {

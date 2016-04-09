@@ -28,6 +28,9 @@ export class GameModel extends Model {
       });
   }
   completeGame(time: number, text: string) {
-    this._store.dispatch(GameActions.completeGame(time, text));
+    const action = GameActions.completeGame(time, text);
+    this._store.dispatch(action);
+    this.performAsyncAction(action)
+      .subscribe(() => console.log('Done!'));
   }
 }
