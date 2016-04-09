@@ -1,5 +1,3 @@
-/* tslint:disable:no-unused-variable */
-
 import {
   Component, Renderer, Input, ViewChild, ElementRef, Output, EventEmitter,
   AfterViewInit
@@ -7,14 +5,23 @@ import {
 import {FORM_PROVIDERS, FORM_DIRECTIVES} from 'angular2/common';
 import {TimerComponent} from '../timer/timer.component';
 import {GameModel} from '../../models/game.model';
+
+import 'rxjs/add/operator/scan';
+
 @Component({
   selector: 'game',
   template: `
-    <timer #timer></timer>
-    <div class="game" #gameContainer>
-      <div class="game-text">{{text}}</div>
-      <textarea #textArea (keyup)="changeHandler($event.target.value)"></textarea>
-    </div>
+    <section *ngIf="invalid() | async">
+      <h1>Your game is invalid!</h1>
+      <img src="./app/assets/cheater.gif">
+    </section>
+    <section *ngIf="!(invalid() | async)">
+      <timer #timer></timer>
+      <div class="game" #gameContainer>
+        <div class="game-text">{{text}}</div>
+        <textarea #textArea (keyup)="changeHandler($event.target.value)"></textarea>
+      </div>
+    </section>
   `,
   styles: [`
     .game textarea {
@@ -42,6 +49,7 @@ export class GameComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
+      this._model.startGame();
       this.timer.start();
       this._renderer.invokeElementMethod(this.textArea.nativeElement, 'focus', []);
     }, 0);
@@ -53,6 +61,7 @@ export class GameComponent implements AfterViewInit {
       this._model.completeGame(this.timer.time, this.text);
       this.timer.reset();
     } else {
+      this._model.onProgress(this.text);
       if (this.text.indexOf(data) !== 0) {
         this._renderer.setElementClass(this.gameContainer.nativeElement, 'wrong', true);
       } else {
@@ -64,6 +73,13 @@ export class GameComponent implements AfterViewInit {
   reset() {
     this.timer.reset();
     this.text = '';
+  }
+
+  invalid() {
+    return this._model.game$
+      .scan((accum: boolean, current: any) => {
+        return (current && current.get('invalid')) || accum;
+      }, false);
   }
 
 }

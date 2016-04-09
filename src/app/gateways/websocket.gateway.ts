@@ -1,6 +1,7 @@
 import {Gateway} from './base.gateway';
 import {Injectable, Inject, OpaqueToken} from 'angular2/core';
 import {Command} from '../commands/base.command';
+import {Observable} from 'rxjs/Observable';
 
 export interface WebSocketGatewayConfig {
   secure: boolean;
@@ -31,6 +32,7 @@ export class WebSocketGateway extends Gateway {
     if (this._connected) {
       this._ws.send(command.serialize());
     }
+    return Observable.create();
   }
   _createConnection() {
     if (this._reconnectTimeout) {

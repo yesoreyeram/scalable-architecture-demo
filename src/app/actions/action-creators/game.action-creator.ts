@@ -1,7 +1,7 @@
 import {Action} from '@ngrx/store';
 
 import {
-  COMPLETE_GAME
+  COMPLETE_GAME, GAME_PROGRESS, INVALID_GAME, START_GAME
 } from '../game.actions';
 
 export const GameActions = {
@@ -9,6 +9,24 @@ export const GameActions = {
     return {
       payload: { text, time },
       type: COMPLETE_GAME
+    };
+  },
+  gameProgress(text: string, time: Date): Action {
+    return {
+      payload: { text, time },
+      type: GAME_PROGRESS
+    };
+  },
+  invalidateGame(): Action {
+    return {
+      payload: null,
+      type: INVALID_GAME
+    };
+  },
+  startGame(): Action {
+    return {
+      payload: null,
+      type: START_GAME
     };
   }
 };

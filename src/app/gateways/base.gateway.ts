@@ -17,5 +17,5 @@ export abstract class Gateway {
       this._connectionEventsEmitter = obs;
     }).share();
   }
-  abstract send(command: Command): any;
+  abstract send(command: Command): Observable<any>;
 }

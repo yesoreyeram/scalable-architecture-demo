@@ -29,7 +29,7 @@ export class WebRTCGateway extends Gateway {
     if (this._provider.isInitiator) {
       this._name = this._provider.name;
     } else {
-      this._name = `${Math.round(Math.random() * 100)}.${Date.now()}`;
+      this._name = `${Math.round(Math.random() * 1000)}-${Date.now()}`;
       this._partner = this._provider.name;
     }
 
@@ -79,6 +79,7 @@ export class WebRTCGateway extends Gateway {
     if (!this._connected) {
       this._peer.send(command.serialize());
     }
+    return Observable.create();
   }
   private _addHandlers() {
     this._peer = new Peer({ initiator: this._provider.isInitiator });

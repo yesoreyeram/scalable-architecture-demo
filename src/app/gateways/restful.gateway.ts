@@ -1,74 +1,36 @@
 import {RestfulCommand} from '../commands/restful.command';
 import {Gateway} from './base.gateway';
-import {Inject, Injectable} from 'angular2/core';
-import {Http, RequestMethod, Response, RequestOptionsArgs, Headers} from 'angular2/http';
-import {API_URL} from '../config/config';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/merge';
-import {BP_HTTP} from '../channels/bp-http.channel';
 import {Observer} from 'rxjs/Observer';
+import {Injectable} from 'angular2/core';
+import {Response, ResponseOptions} from 'angular2/http';
 
 @Injectable()
 export class RestfulGateway extends Gateway {
-  constructor(@Inject(BP_HTTP) private http: Http, @Inject(API_URL) private API_URL: string) {
+  constructor() {
     super();
   }
-  get(command: RestfulCommand): Observable<Response> {
-    return this.http.get(this.getUrl(command));
-  }
-  post(command: RestfulCommand): Observable<Response> {
-    let options: RequestOptionsArgs = {
-      headers: new Headers({
-        'Content-Type': command.mimeType
-      })
-    };
-    return this.http.post(this.getUrl(command), command.serialize().toString(), options);
-  }
-  put(command: RestfulCommand): Observable<Response> {
-    return this.http.put(this.getUrl(command), command.serialize().toString());
-  }
-  delete(command: RestfulCommand): Observable<Response> {
-    return this.http.delete(this.getUrl(command));
-  }
-  send(command: RestfulCommand): Observable<string> {
-    let result: Observable<Response>;
-    switch (command.method) {
-      case RequestMethod.Get:
-        result = this.get(command);
-      break;
-      case RequestMethod.Post:
-        result = this.post(command);
-      break;
-      case RequestMethod.Put:
-        result = this.put(command);
-      break;
-      case RequestMethod.Delete:
-        result = this.delete(command);
-      break;
-    }
-    if (result) {
-      return new Observable<string>((observer: Observer<string>) => {
-        result.catch((response: Response) => {
-            return Observable.create((observer: any) => {
-              observer.next(response);
-            });
-          })
-          .forEach((response: Response) => {
-            const text = response.text();
-            const code = response.status;
-            if (code >= 200 && code <= 299) {
-              observer.next(text);
-            } else {
-              observer.error(text);
-            }
-          }, this);
-      });
-    }
-    throw new Error('The requested REST method is not supported');
-  }
-  private getUrl(command: RestfulCommand): string {
-    return `${this.API_URL}${command.resource}`;
+  send(command: RestfulCommand): Observable<any> {
+    return Observable.create((observer: Observer<any>) => {
+      const ok = Math.random() <= 0.9;
+      const body = null;
+      const status = ok ? 200 : 500;
+      const headers = null;
+      const statusText = null;
+      const type = null;
+      const url = null
+      const response = new Response(new ResponseOptions({
+        body,
+        status,
+        headers,
+        statusText,
+        type,
+        url
+      }));
+      return ok ? observer.next(response) : observer.error(response);
+    });
   }
 }

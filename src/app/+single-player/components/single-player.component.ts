@@ -1,14 +1,21 @@
 /* tslint:disable:no-unused-variable */
 
-import {Component, ViewChild} from 'angular2/core';
+import {Component, ViewChild, provide} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {GameComponent} from '../../components/game/game.component';
+import {GameModel} from '../../models/game.model';
+import {AsyncService} from '../../async-services/base.async-service';
+import {GameServer} from '../../async-services/game-server.async-service';
 
 @Component({
   selector: 'sd-home',
   templateUrl: './app/+single-player/components/single-player.component.html',
   styleUrls: ['./app/+single-player/components/single-player.component.css'],
-  directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, GameComponent]
+  directives: [FORM_DIRECTIVES, CORE_DIRECTIVES, GameComponent],
+  providers: [
+    provide(AsyncService, { multi: true, useClass: GameServer }),
+    GameModel
+  ]
 })
 export class SinglePlayerComponent {
   private text = `Lorem Ipsum is simply dummy text of the printing.`;

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from 'angular2/core';
+import {Inject, Injectable, Optional} from 'angular2/core';
 import {AsyncService} from '../async-services/base.async-service';
 import {Model} from './base.model';
 import {GameActions} from '../actions/action-creators/game.action-creator';
@@ -9,12 +9,25 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class GameModel extends Model {
   games$: Observable<string>;
-  constructor(protected _store: Store<any>, @Inject(AsyncService) protected _services: AsyncService[]) {
-    super();
+  game$: Observable<string>;
+  constructor(protected _store: Store<any>,
+              @Optional() @Inject(AsyncService) _services: AsyncService[]) {
+    super(_services || []);
     this.games$ = this._store.select('games');
+    this.game$ = this._store.select('game');
+  }
+  startGame() {
+    this._store.dispatch(GameActions.startGame());
+  }
+  onProgress(text: string) {
+    this.performAsyncAction(GameActions.gameProgress(text, new Date()))
+      .subscribe(() => {
+        // Do nothing, we're all good
+      }, () => {
+        this._store.dispatch(GameActions.invalidateGame());
+      });
   }
   completeGame(time: number, text: string) {
-    const action = GameActions.completeGame(time, text);
-    this._store.dispatch(action);
+    this._store.dispatch(GameActions.completeGame(time, text));
   }
 }
