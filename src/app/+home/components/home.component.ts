@@ -37,7 +37,7 @@ import {RoomConfig} from '../../config/config';
   </div>
   
   `,
-  providers: [FORM_PROVIDERS, ROUTER_PROVIDERS],
+  providers: [FORM_PROVIDERS, ROUTER_PROVIDERS, GameModel],
   directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 export class HomeComponent {

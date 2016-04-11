@@ -34,7 +34,7 @@ import 'rxjs/add/operator/scan';
       color: white;
     }
   `],
-  providers: [FORM_PROVIDERS],
+  providers: [FORM_PROVIDERS, GameModel],
   directives: [FORM_DIRECTIVES, TimerComponent]
 })
 export class GameComponent implements AfterViewInit {

@@ -17,7 +17,7 @@ const providers = [
   HTTP_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '/' }),
   provideStore({ games: gamesReducer, game: gameReducer, p2pGame: p2pGameReducer }),
-  GameModel, RoomConfig,
+  RoomConfig,
   RestfulGateway
 ];
 
