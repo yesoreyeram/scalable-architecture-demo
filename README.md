@@ -4,7 +4,7 @@
 
 In order to start the seed use:
 
-Refer : http://blog.mgechev.com/2016/04/10/scalable-javascript-single-page-app-angular2-application-architecture/[http://blog.mgechev.com/2016/04/10/scalable-javascript-single-page-app-angular2-application-architecture/]
+Refer : http://blog.mgechev.com/2016/04/10/scalable-javascript-single-page-app-angular2-application-architecture/
 
 ```bash
 git clone --depth 1 https://github.com/mgechev/angular2-seed.git
